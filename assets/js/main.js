@@ -1,18 +1,11 @@
 $(document).ready(function () {
-  console.log("teste");
-  $("#btn-botao").click(function (e) {
+  $("#btn-EtapaInicial").click(function (e) { 
     e.preventDefault();
-    console.log(x);
+    window.location.href = "views/etapa1/index.html";
   });
 
-  var toggle = document.getElementById("toggle");
-  var exemplo = document.getElementById("exemplo");
-
-  toggle.onclick = function () {
-    if (exemplo.className == "hide") {
-      exemplo.className = "";
-    } else {
-      exemplo.className = "hide";
-    }
-  };
+  $("#btn-SelecaoEtapa").click(function (e) { 
+    e.preventDefault();
+    window.location.href = "views/selecaoEtapa/index.html";
+  });
 });
