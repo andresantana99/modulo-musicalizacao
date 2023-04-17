@@ -6,62 +6,108 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Seleção de Etapa :: Módulo Musicalização</title>
+    <title>Página Inicial :: Módulo Musicalização</title>
 
     <!-- Arquivos CSS do Bootstrap -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap');
+    <!-- Arquivo CSS principal -->
+    <link href="../../assets/css/style.css" rel="stylesheet">
 
-        body {
-            font-family: 'Shantell Sans', cursive;
-        }
-
-        h5 {
-            font-size: 16px;
-        }
-    </style>
 </head>
 
 <body>
-    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+    <header>
+
+    </header>
+    <section style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
         <div class="container text-center">
-            <!-- <div class="row justify-content-center p-4">
+            <div class="row justify-content-center p-4">
                 <div class="col">
-                    <h4><strong>Escolha uma opção:</strong></h4>
+                    <h4><strong>Selecione uma etapa:</strong></h4>
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-xl-5 col-lg-6 col-sm-12 col-12 text-end py-2">
-                    <button type="button" class="btn btn-light w-100 border">
+                <div class="col-xl-4 col-lg-6 col-sm-12 col-12 text-end py-2">
+                    <div id="btn-EtapaInicial" type="button" class="btn btn-light w-100 border">
                         <div class="m-auto" style="width: 135px; height: 160px;">
-                            <img src = "assets/img/beginner.svg" style="width: 100%; height: 100%;" alt="Beginner"/>
+                            <img src="../../assets/img/bongo.svg" style="width: 100%; height: 100%;" alt="Beginner" />
+                        </div>
+                        <h5><strong>É a sua primeira vez na nossa plataforma?</strong></h5>
+                        Comece do zero!
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-sm-12 col-12 text-start py-2">
+                    <div id="btn-SelecaoEtapa" type="button" class="btn btn-light w-100 border">
+                        <div class="m-auto" style="width: 120px; height: 160px;">
+                            <img src="../../assets/img/bumbo.svg" style="width: 100%; height: 100%;" alt="Finish" />
+                        </div>
+                        <h5><strong>Já acessou nossa plataforma antes?</strong></h5>
+                        Escolha a etapa desejada!
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-sm-12 col-12 text-start py-2">
+                    <div id="btn-SelecaoEtapa" type="button" class="btn btn-light w-100 border">
+                        <div class="m-auto" style="width: 120px; height: 160px;">
+                            <img src="../../assets/img/gongo.svg" style="width: 100%; height: 100%;" alt="Finish" />
+                        </div>
+                        <h5><strong>Já acessou nossa plataforma antes?</strong></h5>
+                        Escolha a etapa desejada!
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-6 col-sm-12 col-12 text-end py-2">
+                    <button id="btn-EtapaInicial" type="button" class="btn btn-light w-100 border">
+                        <div class="m-auto" style="width: 135px; height: 160px;">
+                            <img src="../../assets/img/conga.svg" style="width: 100%; height: 100%;" alt="Beginner" />
                         </div>
                         <h5><strong>É a sua primeira vez na nossa plataforma?</strong></h5>
                         Comece do zero!
                     </button>
                 </div>
-                <div class="col-xl-5 col-lg-6 col-sm-12 col-12 text-start py-2">
-                    <button type="button" class="btn btn-light w-100 border">
+                <div class="col-xl-4 col-lg-6 col-sm-12 col-12 text-start py-2">
+                    <button id="btn-SelecaoEtapa" type="button" class="btn btn-light w-100 border">
                         <div class="m-auto" style="width: 120px; height: 160px;">
-                            <img src = "assets/img/finish.svg" style="width: 100%; height: 100%;" alt="Finish"/>
+                            <img src="../../assets/img/conjunto-de-tambores.svg" style="width: 100%; height: 100%;"
+                                alt="Finish" />
                         </div>
                         <h5><strong>Já acessou nossa plataforma antes?</strong></h5>
                         Escolha a etapa desejada!
                     </button>
                 </div>
-            </div> -->
+                <div class="col-xl-4 col-lg-6 col-sm-12 col-12 text-start py-2">
+                    <div id="btn-SelecaoEtapa" type="button" class="btn btn-light w-100 border">
+                        <div class="m-auto" style="width: 120px; height: 160px;">
+                            <img src="../../assets/img/xilofone.svg" style="width: 100%; height: 100%;" alt="Finish" />
+                        </div>
+                        <h5><strong>Já acessou nossa plataforma antes?</strong></h5>
+                        Escolha a etapa desejada!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
         </div>
     </div>
 
-    <script src="assets/vendor/jquery.js" type="text/javascript"></script>
-    <script src="assets/js/main.js" type="text/javascript"></script>
+    <!-- Arquivos JS do VLibras -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+
+    <!-- jQuery e arquivo JS da página -->
+    <script src="../../assets/vendor/jquery.js" type="text/javascript"></script>
+    <script src="../../assets/js/main.js" type="text/javascript"></script>
 
     <!-- Arquivos JS do Bootstrap -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/vendor/bootstrap/js/popper.min.js" type="text/javascript"></script>
+    <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="../../assets/vendor/bootstrap/js/popper.min.js" type="text/javascript"></script>
 
 </body>
 
