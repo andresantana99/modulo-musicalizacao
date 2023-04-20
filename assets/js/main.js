@@ -19,6 +19,8 @@ $(document).ready(function () {
     console.log(window.location.pathname);
   }
 
+  $("#conteudo").load("./views/shared/mainpage.html");
+
   //let key = "item 1";
   // localStorage.setItem(key, "value");
 

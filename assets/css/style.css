@@ -4,9 +4,26 @@
     box-sizing: border-box;
 }
 
+#page-container {
+  position: relative;
+  min-height: 93vh;
+}
+
 body {
     margin: 0;
     font-family: 'Shantell Sans', cursive;
+}
+
+#conteudo{
+    padding-bottom: 5.5rem;
+}
+
+#footer {
+    position: absolute;
+    margin-left: 10%;
+    bottom: 0;
+    width: 80%;
+    height: 2.5rem;
 }
 
 h1 {
