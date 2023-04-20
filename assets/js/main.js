@@ -2,9 +2,12 @@ $(document).ready(function () {
   //$("#conteudo").load("views/shared/mainpage.html");
   let ambiente;
 
-  if (window.location.host == '127.0.0.1:5500' || window.location.host == 'localhost') {
+  if (
+    window.location.host == "127.0.0.1:5500" ||
+    window.location.host == "localhost"
+  ) {
     ambiente = "dev";
-  } else if (window.location.host == 'andresantana99.github.io') {
+  } else if (window.location.host == "andresantana99.github.io") {
     ambiente = "prd";
   }
 
@@ -38,14 +41,4 @@ $(document).ready(function () {
   //   let value = localStorage.getItem(key);
   //   console.log(key, value);
   // }
-
-  $("#btn-EtapaInicial").click(function (e) {
-    e.preventDefault();
-    window.location.href = "../views/etapa1/index.html";
-  });
-
-  $("#btn-SelecaoEtapa").click(function (e) {
-    e.preventDefault();
-    window.location.href = "../views/selecaoEtapa/index.html";
-  });
 });
