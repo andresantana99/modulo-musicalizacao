@@ -18,8 +18,8 @@
 </head>
 
 <body>
-    <div id="page-container">
-        <div class="container">
+    <div class="container page-container">
+        <div class="row">
             <header id="header"
                 class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
                 <a href="/" class="d-flex align-items-center mb-2 mb-md-0 text-dark text-decoration-none">
@@ -28,12 +28,18 @@
                 </a>
 
                 <ul class="nav justify-content-center mb-md-0 text-end">
-                    <li><a href="#" class="nav-link px-2 link-dark"><img src="../../assets/img/diminuir-fonte.svg"
-                                width="20" height="32"></a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark"><img src="../../assets/img/aumentar-fonte.svg"
-                                width="20" height="32"></a></li>
-                    <li><a href="#" class="nav-link px-2 link-dark"><img src="../../assets/img/contraste.svg" width="20"
-                                height="32" class="rounded-circle"></a></li>
+                    <li>
+                        <a href="#" class="nav-link px-2 link-dark"><img src="../../assets/img/diminuir-fonte.svg"
+                                width="20" height="32"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-2 link-dark"><img src="../../assets/img/aumentar-fonte.svg"
+                                width="20" height="32"></a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-2 link-dark"><img src="../../assets/img/contraste.svg" width="20"
+                                height="32" class="rounded-circle"></a>
+                    </li>
                     <li>
                         <a href="#" class="d-block nav-link px-2 link-dark text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" title="Acessibilidade">
@@ -51,72 +57,77 @@
                 </ul>
             </header>
         </div>
-        <section id="conteudo">
-            <div class="container text-center">
-                <div class="row justify-content-center p-4">
-                    <div class="col">
-                        <h4><strong>Selecione uma etapa:</strong></h4>
+        <br>
+        <div class="row">
+            <section id="conteudo">
+                <div class="container text-center">
+                    <div class="row justify-content-center p-4">
+                        <div class="col">
+                            <h4><strong>Selecione uma etapa:</strong></h4>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
+                            <button id="btn-EtapaInicial" type="button" class="btn btn-light border">
+                                <div class="div-beginner m-auto">
+                                    <img src="../../assets/img/bongo.svg" style="width: 100%; height: 100%;" alt="Bongo" />
+                                </div>
+                                <h5><strong>Etapa 1</strong></h5>
+                            </button>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
+                            <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
+                                <div class="div-beginner m-auto">
+                                    <img src="../../assets/img/bumbo.svg" style="width: 100%; height: 100%;" alt="Bumbo" />
+                                </div>
+                                <h5><strong>Etapa 2</strong></h5>
+                            </button>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
+                            <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
+                                <div class="div-beginner m-auto">
+                                    <img src="../../assets/img/gongo.svg" style="width: 100%; height: 100%;" alt="Gongo" />
+                                </div>
+                                <h5><strong>Etapa 3</strong></h5>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
+                            <button id="btn-EtapaInicial" type="button" class="btn btn-light border">
+                                <div class="div-beginner m-auto">
+                                    <img src="../../assets/img/conga.svg" style="width: 100%; height: 100%;" alt="Conga" />
+                                </div>
+                                <h5><strong>Etapa 4</strong></h5>
+                            </button>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
+                            <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
+                                <div class="div-beginner m-auto">
+                                    <img src="../../assets/img/conjunto-de-tambores.svg" style="width: 100%; height: 100%;"
+                                        alt="Conjunto de Tambores" />
+                                </div>
+                                <h5><strong>Etapa 5</strong></h5>
+                            </button>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
+                            <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
+                                <div class="div-beginner m-auto">
+                                    <img src="../../assets/img/xilofone.svg" style="width: 100%; height: 100%;" alt="Xilofone" />
+                                </div>
+                                <h5><strong>Etapa 6</strong></h5>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
-                        <button id="btn-EtapaInicial" type="button" class="btn btn-light border">
-                            <div class="div-beginner m-auto">
-                                <img src="../../assets/img/bongo.svg" style="width: 100%; height: 100%;" alt="Bongo" />
-                            </div>
-                            <h5><strong>Etapa 1</strong></h5>
-                        </button>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
-                        <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
-                            <div class="div-beginner m-auto">
-                                <img src="../../assets/img/bumbo.svg" style="width: 100%; height: 100%;" alt="Bumbo" />
-                            </div>
-                            <h5><strong>Etapa 2</strong></h5>
-                        </button>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
-                        <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
-                            <div class="div-beginner m-auto">
-                                <img src="../../assets/img/gongo.svg" style="width: 100%; height: 100%;" alt="Gongo" />
-                            </div>
-                            <h5><strong>Etapa 3</strong></h5>
-                        </button>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
-                        <button id="btn-EtapaInicial" type="button" class="btn btn-light border">
-                            <div class="div-beginner m-auto">
-                                <img src="../../assets/img/conga.svg" style="width: 100%; height: 100%;" alt="Conga" />
-                            </div>
-                            <h5><strong>Etapa 4</strong></h5>
-                        </button>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
-                        <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
-                            <div class="div-beginner m-auto">
-                                <img src="../../assets/img/conjunto-de-tambores.svg" style="width: 100%; height: 100%;"
-                                    alt="Conjunto de Tambores" />
-                            </div>
-                            <h5><strong>Etapa 5</strong></h5>
-                        </button>
-                    </div>
-                    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 py-2">
-                        <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
-                            <div class="div-beginner m-auto">
-                                <img src="../../assets/img/xilofone.svg" style="width: 100%; height: 100%;" alt="Xilofone" />
-                            </div>
-                            <h5><strong>Etapa 6</strong></h5>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <br>
+            </section>
+        </div>
+        <br><br>
+        <div class="row">
             <footer id="footer" class="footer">
                 <p class="text-center text-body-secondary">© Universidade Federal do Pará, 2023</p>
             </footer>
-        </section>
+        </div>
 
         <div vw class="enabled">
             <div vw-access-button class="active"></div>
@@ -125,8 +136,6 @@
             </div>
         </div>
     </div>
-
-    
 
     <!-- Arquivos JS do VLibras -->
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>

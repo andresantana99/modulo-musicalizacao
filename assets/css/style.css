@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap');
 
+:root {
+    --dark-mode: #000;
+    --light-mode: #fff;
+    --btn-bg: rgba(255, 255, 255, 0.125);
+    --btn-bg-hover: #d3d4d58c;
+  }
+
 * {
     box-sizing: border-box;
 }
@@ -9,16 +16,16 @@
   min-height: 95vh;
 }
 
-
 body {
     margin: 0;
     font-family: 'Shantell Sans', cursive;
 }
 
-#conteudo{
+.page-container .row #conteudo{
     padding-bottom: 5.5rem;
+    margin: auto;
     height: calc(100vh - 30vh);
-    /* display: flex;  */
+    display: flex; 
     justify-content: center; 
     align-items: center;
 }
@@ -46,10 +53,13 @@ body {
     min-width: 16.75rem;
 }
 
-#footer {
-    padding: 1rem;
-    position: relative;
+.page-container .row #footer {
+    position: fixed;
+    background-color: var(--light-mode);
+    left: 0;
     bottom: 0;
+    width: 100%;
+    text-align: center;
 }
 
 h1 {
