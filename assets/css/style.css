@@ -6,9 +6,8 @@
 
 #page-container {
   position: relative;
-  min-height: 93vh;
+  min-height: 95vh;
 }
-
 
 
 body {
@@ -49,10 +48,8 @@ body {
 
 #footer {
     padding: 1rem;
-    position: fixed;
+    position: relative;
     bottom: 0;
-    left: 0;
-    right: 0;
 }
 
 h1 {
