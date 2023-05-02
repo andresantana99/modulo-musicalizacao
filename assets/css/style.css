@@ -19,7 +19,7 @@ body {
 #conteudo{
     padding-bottom: 5.5rem;
     height: calc(100vh - 30vh);
-    display: flex; 
+    /* display: flex;  */
     justify-content: center; 
     align-items: center;
 }
