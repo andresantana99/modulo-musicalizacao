@@ -1,16 +1,3 @@
-<!-- <head>
-    <script src="assets/vendor/jquery.js" type="text/javascript"></script>
-    <script>
-        $(document).ready(function () {
-            $("#cabecalho").load("views/shared/cabecalho.html");
-            $("#rodape").load("views/shared/rodape.html");
-            setTimeout(function () {
-                $("#conteudo").load("views/shared/mainpage.html");
-            }, 100)
-        });
-    </script>
-</head> -->
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -64,15 +51,36 @@
                 </ul>
             </header>
         </div>
-        <section id="conteudo"></section>
-        <footer id="footer" class="footer py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-            </ul>
+        <section id="conteudo">
+            <div class="container text-center">
+                <div class="row justify-content-center p-4">
+                    <div class="col">
+                        <h4><strong>Escolha uma opção:</strong></h4>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 py-2">
+                        <button id="btn-EtapaInicial" type="button" class="btn btn-light border">
+                            <div class="div-beginner m-auto">
+                                <img src="assets/img/beginner.svg" style="width: 100%; height: 100%;" alt="Beginner" />
+                            </div>
+                            <h5><strong>É a sua primeira vez na nossa plataforma?</strong></h5>
+                            Comece do zero!
+                        </button>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 py-2">
+                        <button id="btn-SelecaoEtapa" type="button" class="btn btn-light border">
+                            <div class="div-finish m-auto">
+                                <img src="./assets/img/finish.svg" style="width: 100%; height: 100%;" alt="Finish" />
+                            </div>
+                            <h5><strong>Já acessou nossa plataforma antes?</strong></h5>
+                            Escolha a etapa desejada!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer id="footer" class="footer">
             <p class="text-center text-body-secondary">© Universidade Federal do Pará, 2023</p>
         </footer>
 
@@ -94,14 +102,8 @@
     <!-- jQuery -->
     <script src="./assets/vendor/jquery.js" type="text/javascript"></script>
 
-    <!-- Inserção do conteúdo da tela inicial -->
-    <script>
-        $(document).ready(function () {
-            
-        });
-    </script>
-
     <script src="./assets/js/main.js" type="text/javascript"></script>
+    <script src="./assets/js/mainpage.js" type="text/javascript"></script>
 
     <!-- Arquivos JS do Bootstrap -->
     <script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>

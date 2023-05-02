@@ -9,6 +9,8 @@
   min-height: 93vh;
 }
 
+
+
 body {
     margin: 0;
     font-family: 'Shantell Sans', cursive;
@@ -16,14 +18,41 @@ body {
 
 #conteudo{
     padding-bottom: 5.5rem;
+    height: calc(100vh - 30vh);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.div-beginner, .div-finish{
+    padding-top: 1rem; 
+    padding-bottom: 1.5rem; 
+    width: 135px; 
+    height: 160px;
+}
+
+.div-finish {
+    padding-top: 1.5rem; 
+    padding-bottom: 2rem;  
+    width: 120px; 
+    height: 160px;
+}
+
+#btn-EtapaInicial, #btn-SelecaoEtapa{
+    padding: 1rem;
+    height: 100%;
+    max-height: 16rem;
+    min-height: 16rem;
+    max-width: 16.75rem;
+    min-width: 16.75rem;
 }
 
 #footer {
-    position: absolute;
-    margin-left: 10%;
+    padding: 1rem;
+    position: fixed;
     bottom: 0;
-    width: 80%;
-    height: 2.5rem;
+    left: 0;
+    right: 0;
 }
 
 h1 {

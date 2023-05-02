@@ -1,15 +1,15 @@
 $(document).ready(function () {
   //$("#conteudo").load("views/shared/mainpage.html");
-  let ambiente;
+  // let ambiente;
 
-  if (
-    window.location.host == "127.0.0.1:5500" ||
-    window.location.host == "localhost"
-  ) {
-    ambiente = "dev";
-  } else if (window.location.host == "andresantana99.github.io") {
-    ambiente = "prd";
-  }
+  // if (
+  //   window.location.host == "127.0.0.1:5500" ||
+  //   window.location.host == "localhost"
+  // ) {
+  //   ambiente = "dev";
+  // } else if (window.location.host == "andresantana99.github.io") {
+  //   ambiente = "prd";
+  // }
 
   if (window.localStorage) {
     // Suporte ao localStorage
@@ -19,6 +19,8 @@ $(document).ready(function () {
     console.log(window.location.pathname);
   }
 
+  if (window.location.pathname == '/index.html' || 
+      window.location.pathname == '/modulo-musicalizacao/' )
   $("#conteudo").load("./views/shared/mainpage.html");
 
   //let key = "item 1";
