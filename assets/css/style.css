@@ -25,7 +25,7 @@ body {
     padding-bottom: 5.5rem;
     margin: auto;
     height: calc(100vh - 30vh);
-    display: flex; 
+    display: table; 
     justify-content: center; 
     align-items: center;
 }
