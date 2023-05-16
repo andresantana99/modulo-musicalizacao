@@ -53,6 +53,15 @@ body {
     min-width: 10.75rem;    
 }
 
+#btn-Etapa1, #btn-Etapa2, #btn-Etapa3, #btn-Etapa4, #btn-Etapa5{
+    padding: 1rem;
+    height: 100%;
+    max-height: 16rem;
+    min-height: 16rem;
+    max-width: 16rem;
+    min-width: 16rem;    
+}
+
 .page-container .row #footer {
     position: fixed;
     padding-top: 1rem;
@@ -70,5 +79,5 @@ h1 {
 }
 
 h5 {
-    font-size: 16px;
+    font-size: 18px;
 }
