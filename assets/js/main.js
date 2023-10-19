@@ -1,48 +1,42 @@
+const zoomMaximo = 180;
+const zoomMinimo = 70;
+
 $(document).ready(function () {
-  //$("#conteudo").load("views/shared/mainpage.html");
-  // let ambiente;
+  //#region Funcionalidade para habilitar ou desabilitar o modo escuro
 
-  // if (
-  //   window.location.host == "127.0.0.1:5500" ||
-  //   window.location.host == "localhost"
-  // ) {
-  //   ambiente = "dev";
-  // } else if (window.location.host == "andresantana99.github.io") {
-  //   ambiente = "prd";
-  // }
+  //$('body').addClass('dark-mode');
+  //$('footer').addClass('dark-mode');
 
-  if (window.localStorage) {
-    // Suporte ao localStorage
-    console.log(window.location.href);
-    console.log(window.location.protocol);
-    console.log(window.location.host);
-    console.log(window.location.pathname);
+  //#endregion
+
+  //#region Funcionalidade para aumentar ou diminuir o Zoom 
+
+  // Adicionando evento de click aos respectivos botões
+  $("#btnAumentarFonte").click(aumentarZoom);
+  $("#btnDiminuirFonte").click(DiminuirZoom);
+
+  // Variável para obter aproximadamente os pixels disponíveis na tela do dispositivo
+  let nivelZoom = Math.round(window.devicePixelRatio * 100);
+
+  function aumentarZoom() {
+    // Não fazer nada ao chegar no zoom máximo possível
+    if (nivelZoom >= zoomMaximo) return;
+
+    nivelZoom += 10;
+
+    // Setar valor de zoom no body
+    $('body').css('zoom', nivelZoom.toString() + '%');
   }
 
-  if (window.location.pathname == '/index.html' || 
-      window.location.pathname == '/modulo-musicalizacao/' )
-  $("#conteudo").load("./views/shared/mainpage.html");
+  function DiminuirZoom() {
+    // Não fazer nada ao chegar no zoom mínimo possível
+    if (nivelZoom <= zoomMinimo) return;
 
-  //let key = "item 1";
-  // localStorage.setItem(key, "value");
+    nivelZoom -= 10;
 
-  //let myItem = localStorage.getItem(key);
+    // Setar valor de zoom no body
+    $('body').css('zoom', nivelZoom.toString() + '%');
+  }
+  //#endregion
 
-  //localStorage.removeItem(key);
-  // localStorage.clear();
-
-  //console.log(myItem);
-
-  // Criar item:
-  //let myObj = { name: "Gabriel", age: 25 };
-  //localStorage.setItem(key, JSON.stringify(myObj));
-
-  // Ler item:
-  //let myItem = JSON.parse(localStorage.getItem(key));
-
-  // for (let i = 0; i < localStorage.length; i++){
-  //   let key = localStorage.key(i);
-  //   let value = localStorage.getItem(key);
-  //   console.log(key, value);
-  // }
 });

@@ -21,6 +21,12 @@ body {
     font-family: 'Shantell Sans', cursive;
 }
 
+/* Modo escuro */
+.dark-mode {
+    background-color: var(--dark-mode);
+    color: var(--light-mode);
+}
+
 .page-container .row #conteudo{
     padding-bottom: 5.5rem;
     margin: auto;
