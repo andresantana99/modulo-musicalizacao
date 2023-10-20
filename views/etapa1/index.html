@@ -9,7 +9,6 @@
     <title>Página Inicial :: Módulo Musicalização</title>
 
     <!-- Arquivos CSS do Bootstrap -->
-    <link href="../../assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Arquivo CSS principal -->
@@ -59,7 +58,55 @@
         </div>
         <div class="row">
             <section id="conteudo">
-                
+                <div class="d-flex flex-column justify-content-center container align-items-center etapa1-container">
+                    <ul class="nav d-flex justify-content-between etapa1-menu-container">
+                        <li>
+                            <div class="icon-container etapa1-icon-prof">
+                                <img class="icon-img px-2" src="../../assets/img/professor.svg">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <h2>Etapa 1</h2>
+                                <h5>Aprendendo o nome das notas musicais</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress" role="progressbar"></div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="conteudo-etapas" class="container-estapas-div">
+                        <section class="container-content">
+                            <div id="conteudo-etapa1" class="d-flex flex-column justify-content-around etapa1-texto">
+                                <div>
+                                    <h5>Exercício 1</h5>
+                                </div>
+                                <div>
+                                    <p>Clique na letra que corresponde à nota Lá:</p>
+                                </div>
+                            </div>
+                            <div class="etapa1-grid-notas d-flex flex-wrap justify-content-around align-items-center">
+                                <div class="etapa1-notas otrec" onclick="otrec(conteudo_etapa1.exercicio2)"
+                                    role="button">A</div>
+                                <div class="etapa1-notas odarre" onclick="odarre(telas.etapa1Tela1)" role="button">B
+                                </div>
+                                <div class="etapa1-notas odarre" onclick="odarre(telas.etapa1Tela1)" role="button">C
+                                </div>
+                                <div class="etapa1-notas odarre" onclick="odarre(telas.etapa1Tela1)" role="button">D
+                                </div>
+                                <div class="etapa1-notas odarre" onclick="odarre(telas.etapa1Tela1)" role="button">E
+                                </div>
+                                <div class="etapa1-notas odarre" onclick="odarre(telas.etapa1Tela1)" role="button">F
+                                </div>
+                                <div class="etapa1-notas odarre" onclick="odarre(telas.etapa1Tela1)" role="button">G
+                                </div>
+                            </div>
+                            <div class="mensagem" id="mensagem"></div>
+                        </section>
+                    </div>
+                </div>
             </section>
         </div>
         <div class="row">
