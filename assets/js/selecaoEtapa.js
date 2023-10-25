@@ -23,4 +23,9 @@ $(document).ready(function () {
     e.preventDefault();
     window.location.href = "../../views/etapa5/index.html";
   });
+
+  $("#home").click(function (e) {
+    e.preventDefault();
+    window.location.href = "../../index.html";
+  });
 });

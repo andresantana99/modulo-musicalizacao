@@ -9,5 +9,10 @@ $(document).ready(function () {
       e.preventDefault();
       window.location.href = "./views/selecaoEtapa/index.html";
     });
+
+    $("#home").click(function (e) {
+      e.preventDefault();
+      window.location.href = "index.html";
+    });
   });
   

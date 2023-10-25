@@ -2,12 +2,33 @@ const zoomMaximo = 180;
 const zoomMinimo = 70;
 
 $(document).ready(function () {
+
   //#region Funcionalidade para habilitar ou desabilitar o modo escuro
+  $('#btnAltoContraste').click(alternarModoEscuro);
 
-  //$('body').addClass('dark-mode');
-  //$('footer').addClass('dark-mode');
+  function alternarModoEscuro() {
+    if ($('html').attr('data-bs-theme') == 'light') {
+      $('html').attr('data-bs-theme', 'dark');
+      $('#btnDiminuirFonte').css('filter', 'invert(1)');
+      $('#btnAumentarFonte').css('filter', 'invert(1)');
+      $('#btnAltoContraste').css('filter', 'invert(1)');
+      $('#btnAcessibilidade').css('filter', 'invert(1)');
+      $('button').addClass('btn-dark');
+      $('button').removeClass('btn-light');
 
+    } else {
+      $('html').attr('data-bs-theme', 'light');
+      $('#btnDiminuirFonte').css('filter', 'invert(0)');
+      $('#btnAumentarFonte').css('filter', 'invert(0)');
+      $('#btnAltoContraste').css('filter', 'invert(0)');
+      $('#btnAcessibilidade').css('filter', 'invert(0)');
+      $('button').addClass('btn-light');
+      $('button').removeClass('btn-dark');
+      
+    }
+  }
   //#endregion
+
 
   //#region Funcionalidade para aumentar ou diminuir o Zoom 
 
