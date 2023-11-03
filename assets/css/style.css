@@ -64,6 +64,14 @@ body {
     text-align: center;
 }
 
+#home,
+#btnAumentarFonte,
+#btnDiminuirFonte,
+#btnAltoContraste,
+#btnAcessibilidade {
+    cursor: pointer;
+}
+
 h1 {
     font-family: 'Shantell Sans', cursive;
     font-size: 25px;
