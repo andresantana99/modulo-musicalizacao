@@ -46,14 +46,9 @@ $(document).ready(function () {
   //#region Funcionalidade para aumentar ou diminuir o Zoom 
   
   // Variável para obter aproximadamente os pixels disponíveis na tela do dispositivo
-  // let nivelZoom = 0;
   
-  // if (Math.round(window.devicePixelRatio) === 1) {
-    let nivelZoom = Math.round(window.devicePixelRatio * 100);
-  // } else if (Math.round(window.devicePixelRatio) === 2) {
-  //   nivelZoom = Math.round(window.devicePixelRatio * 75);
-  // }  
-  
+  let nivelZoom = Math.round(window.devicePixelRatio * 100);
+
   if (localStorage.getItem('zoom') !== null) {
     document.body.style.zoom = localStorage.getItem('zoom') + "%";
     
