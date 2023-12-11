@@ -18,7 +18,7 @@
     <style type="text/css">
         h3 {
             color: black;
-        } 
+        }
     </style>
 
 </head>
@@ -70,11 +70,11 @@
             const play = $("#play");
             const audio = document.getElementById("audio");
 
-            const bSquare = $('#blueSquare');
-            const rSquare = $('#redSquare');
-            const gSquare = $('#greenSquare');
-            const ySquare = $('#yellowSquare');
-            const oSquare = $('#orangeSquare');
+            const SeminimaRectangule = $('#blueSquare');
+            const ColcheiaRectangule = $('#redSquare');
+            const SemiColcheiaRectangule = $('#greenSquare');
+            const MinimaRectangule = $('#yellowSquare');
+            const SemiBreveRectangule = $('#orangeSquare');
 
             var currentBpm = 40;
             var isPlaying = false;
@@ -103,40 +103,39 @@
                 currentBpm = parseInt(this.value);
                 if (isPlaying) {
                     clearInterval(timerTick);
-                    bSquare.stop(true, true).fadeIn();
-                    rSquare.stop(true, true).fadeIn();
-                    gSquare.stop(true, true).fadeIn();
-                    ySquare.stop(true, true).fadeIn();
-                    oSquare.stop(true, true).fadeIn();
-                    //clearInterval(timerBlueSquare);
+                    SeminimaRectangule.stop(true, true).fadeIn();
+                    ColcheiaRectangule.stop(true, true).fadeIn();
+                    SemiColcheiaRectangule.stop(true, true).fadeIn();
+                    MinimaRectangule.stop(true, true).fadeIn();
+                    SemiBreveRectangule.stop(true, true).fadeIn();
                     interval = (60 * 1000) / currentBpm;
                     timerTick = setInterval(function () {
                         tick();
-                        bSquare.fadeOut(interval / 2);
-                        bSquare.fadeIn(interval / 2);
+                        SeminimaRectangule.fadeOut(interval / 2);
+                        SeminimaRectangule.fadeIn(interval / 2);
 
-                        rSquare.fadeOut(interval / 4);
-                        rSquare.fadeIn(interval / 4);
-                        rSquare.fadeOut(interval / 4);
-                        rSquare.fadeIn(interval / 4);
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
 
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
 
-                        ySquare.fadeOut(interval);
-                        ySquare.fadeIn(interval);
+                        MinimaRectangule.fadeOut(interval);
+                        MinimaRectangule.fadeIn(interval);
 
-                        oSquare.fadeOut(interval * 2);
-                        oSquare.fadeIn(interval * 2);
-                        
+                        SemiBreveRectangule.fadeOut(interval * 2);
+                        SemiBreveRectangule.fadeIn(interval * 2);
+
                     }, interval);
-                    
+
                 }
             });
 
@@ -145,38 +144,38 @@
                 if (isPlaying) {
                     play.html('Play');
                     clearInterval(timerTick);
-                    bSquare.stop(true, true).fadeIn();
-                    rSquare.stop(true, true).fadeIn();
-                    gSquare.stop(true, true).fadeIn();
-                    ySquare.stop(true, true).fadeIn();
-                    oSquare.stop(true, true).fadeIn();
+                    SeminimaRectangule.stop(true, true).fadeIn();
+                    ColcheiaRectangule.stop(true, true).fadeIn();
+                    SemiColcheiaRectangule.stop(true, true).fadeIn();
+                    MinimaRectangule.stop(true, true).fadeIn();
+                    SemiBreveRectangule.stop(true, true).fadeIn();
                 } else {
                     play.html('Stop')
                     interval = (60 * 1000) / currentBpm;
                     timerTick = setInterval(function () {
                         tick();
-                        bSquare.fadeOut(interval / 2);
-                        bSquare.fadeIn(interval / 2);
+                        SeminimaRectangule.fadeOut(interval / 2);
+                        SeminimaRectangule.fadeIn(interval / 2);
 
-                        rSquare.fadeOut(interval / 4);
-                        rSquare.fadeIn(interval / 4);
-                        rSquare.fadeOut(interval / 4);
-                        rSquare.fadeIn(interval / 4);
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
 
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
-                        gSquare.fadeOut(interval / 8);
-                        gSquare.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
 
-                        ySquare.fadeOut(interval);
-                        ySquare.fadeIn(interval);
+                        MinimaRectangule.fadeOut(interval);
+                        MinimaRectangule.fadeIn(interval);
 
-                        oSquare.fadeOut(interval * 2);
-                        oSquare.fadeIn(interval * 2);
+                        SemiBreveRectangule.fadeOut(interval * 2);
+                        SemiBreveRectangule.fadeIn(interval * 2);
 
                     }, interval);
                 }
