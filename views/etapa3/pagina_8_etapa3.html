@@ -1,7 +1,5 @@
 <div class="row p-3 mb-4 bg-body-tertiary rounded-3" style="min-height: 400px;">
     <div class="text-center">
-        <!-- <p class="fs-4">Nossos exercícios consistirão em dois compassos com 4 unidades de
-            tempo cada. Confira o resultado da substituição da segunda semibreve por duas semínimas:</p> -->
         <p class="fs-4">Configure os dois compassos com as figuras rítmicas disponíveis e se divirta.</p>
         <br>
     </div>
@@ -9,14 +7,11 @@
         <table class="table table-bordered border-light">
             <thead>
                 <tr style="border: none;">
-                    <th id="teste" style="border: none;" scope="col" colspan="0">1º Compasso</th>
+                    <th id="th-1" style="border: none;" scope="col" colspan="0">1º Compasso</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="unidades-tempo primeiro-compasso">
-                    <!-- <td style="background-color: #820742; width: 50% !important;"></td>
-                    <td style="background-color: #17867C; width: 25% !important;"></td>
-                    <td style="background-color: #17867C; width: 25% !important;"></td> -->
+                <tr class="unidades-tempo compasso-1">
                 </tr>
             </tbody>
         </table>
@@ -24,16 +19,11 @@
         <table class="table table-bordered border-light">
             <thead>
                 <tr style="border: none;">
-                    <th style="border: none;" scope="col" colspan="0">2º Compasso</th>
+                    <th id="th-2" style="border: none;" scope="col" colspan="0">2º Compasso</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="unidades-tempo segundo-compasso">
-                    <!-- <td style="background-color: #820742; width: 50% !important;"></td>
-                    <td style="background-color: #E6972A; width: 12.5% !important;"></td>
-                    <td style="background-color: #E6972A; width: 12.5% !important;"></td>
-                    <td style="background-color: #E6972A; width: 12.5% !important;"></td>
-                    <td style="background-color: #E6972A; width: 12.5% !important;"></td> -->
+                <tr class="unidades-tempo compasso-2">
                 </tr>
             </tbody>
         </table>
@@ -82,56 +72,116 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        let numeroCompasso = 0;
         let figurasPrimeiroCompasso = 0;
         let figurasSegundoCompasso = 0;
 
-        $("#btnSeminima").click(function (e) {
-            e.preventDefault();
+        $("#btnSeminima").click(function (e) { adicionaFigura(this.id); });
+        $("#btnColcheia").click(function (e) { adicionaFigura(this.id); });
+        $("#btnSemicolcheia").click(function (e) { adicionaFigura(this.id); });
+        $("#btnSemibreve").click(function (e) { adicionaFigura(this.id); });
+
+        function adicionaFigura(botao) {
+
             if (figurasPrimeiroCompasso < 2) {
+                numeroCompasso = 1;
                 figurasPrimeiroCompasso++;
             } else if (figurasSegundoCompasso < 2) {
+                numeroCompasso = 2;
                 figurasSegundoCompasso++;
             } else {
+                numeroCompasso = 0;
                 Swal.fire({
                     icon: "warning",
                     title: "Compasso Completo!",
-                    html: "Todas as unidades de tempo dos dois compassos já foram preenchidas.",
+                    confirmButtonColor: "#28A745",
+                    cancelButtonColor: "#DC3545",
+                    showCancelButton: true,
+                    confirmButtonText: "Sim",
+                    cancelButtonText: "Não",
+                    html: "Todas as unidades de tempo dos dois compassos já foram preenchidas. Você deseja limpar os compassos e começar novamente?",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        limparCompassos();
+                        Swal.fire({
+                            icon: "success",
+                            title: "Feito!",
+                            timer: 1500,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                        });
+                    }
                 });
                 return;
             }
 
-            console.log($("#teste").attr("colspan"));
-        });
+            if (numeroCompasso == 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro inesperado!",
+                    html: "Por favor, tente novamente mais tarde.",
+                    confirmButtonColor: "#3085d6",
+                    footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Contate-nos.</a>',
+                });
+                return;
+            }
 
-        function adicionaFigura(botao, target) {
+            let auxiliar;
             switch (botao) {
-                case "btnSeminima":
-                    $(".primeiro-compasso").append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
-                    $(".primeiro-compasso").append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
-
-                    let auxiliar = parseInt(("#teste").attr("colspan"));
-                    console.log(auxiliar);
-                    //$("#teste").attr(attributeName, value);
-                    //<td style="background-color: #17867C; width: 25% !important;"></td>
-                    break;
-                case "btnColcheia":
-
-                    break;
-                case "btnSemicolcheia":
-
-                    break;
                 case "btnSemibreve":
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #820742; width: 50% !important;"></td>`);
 
+                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 1);
                     break;
+
+                case "btnSeminima":
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
+
+                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 2);
+                    break;
+
+                case "btnColcheia":
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+
+                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 4);
+                    break;
+
+                case "btnSemicolcheia":
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+
+                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 8);
+                    break;
+
                 default:
                     Swal.fire({
                         icon: "error",
-                        title: "Houve algum erro!",
-                        html: "Tente novamente mais tarde.",
-                        footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Entre em contato pelo GitHub.</a>',
+                        title: "Erro inesperado!",
+                        html: "Por favor, tente novamente mais tarde.",
+                        confirmButtonColor: "#3085d6",
+                        footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Contate-nos.</a>',
                     });
                     break;
             }
+        }
+
+        function limparCompassos() {
+            $(".unidades-tempo").children("td").remove();
+            numeroCompasso = figurasPrimeiroCompasso = figurasSegundoCompasso = 0;
         }
     });
 </script>
