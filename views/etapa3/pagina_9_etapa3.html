@@ -5,49 +5,37 @@
         </p>
         <br>
     </div>
-    <div class="py-2 table-responsive text-center">
-        <table class="table table-bordered border-light">
-            <thead>
-                <tr style="border: none;">
-                    <th id="th-1" style="border: none;" scope="col" colspan="0">1º Compasso</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="unidades-tempo compasso-1">
-                </tr>
-            </tbody>
-        </table>
-        <br>
-        <table class="table table-bordered border-light">
-            <thead>
-                <tr style="border: none;">
-                    <th id="th-2" style="border: none;" scope="col" colspan="0">2º Compasso</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="unidades-tempo compasso-2">
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="pt-5">Clique nos botões abaixo para definir a sequência rítmica do compasso:</h4>
     <div class="container text-center">
         <div class="row align-items-center">
-            <div class="col-6 col-md-3 py-4">
-                <button id="btnSeminima" type="button" class="btn"
-                    style="background-color: #17867C; color: white;">Semínima</button>
+            <div class="col-12 col-md-6 py-4">
+                <div id="" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #17867C; color: white;"></div>
             </div>
-            <div class="col-6 col-md-3">
-                <button id="btnColcheia" type="button" class="btn"
-                    style="background-color: #E6972A; color: white;">Colcheia</button>
+            <div class="col-12 col-md-6">
+                <div id="" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #E6972A; color: white;"></div>
             </div>
-            <div class="col-6 col-md-3">
-                <button id="btnSemicolcheia" type="button" class="btn"
-                    style="background-color: #B9C303; color: white;">Semicolcheia</button>
+            <div class="col-12 col-md-6">
+                <div id="" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #B9C303; color: white;"></div>
             </div>
-            <div class="col-6 col-md-3">
-                <button id="btnSemibreve" type="button" class="btn"
-                    style="background-color: #820742; color: white;">Semibreve</button>
+            <div class="col-12 col-md-6">
+                <div id="" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #820742; color: white;"></div>
+            </div>
+        </div>
+    </div>
+    <h4 class="pt-5">Arraste o scroll abaixo para definir a frequência dos intervalos em batidas por minuto (BPM):</h4>
+    <div class="container text-center">
+        <div class="row justify-content-center p-3">
+            <div class="col-12">
+                <h4><strong id="titlebpm">10 BPM</strong></h4>
+                <input type="range" class="form-range" min="1" max="200" value="10" id="bpm" />
+                <audio id="audio" src="clap.wav"></audio>
+            </div>
+            <div class="col-12">
+                <button type="button" class="btn btn-outline-primary" id="play">Play</button>
+                <button type="button" class="btn btn-outline-primary" id="play">Play</button>
             </div>
         </div>
     </div>
