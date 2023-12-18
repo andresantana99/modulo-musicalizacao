@@ -5,6 +5,7 @@ $(document).ready(function () {
   //#region Funcionalidade para habilitar ou desabilitar o modo escuro
   if (localStorage.getItem("dark-mode") === null) {
     localStorage.setItem("dark-mode", "light");
+    localStorage.setItem("color-text", "#545454");
   }
 
   alternarModoEscuro();
@@ -12,8 +13,10 @@ $(document).ready(function () {
   $("#btnAltoContraste").click(() => {
     if (localStorage.getItem("dark-mode") == "light") {
       localStorage.setItem("dark-mode", "dark"); // Salvando em Cache
+      localStorage.setItem("color-text", "#e1e1e1");
     } else {
       localStorage.setItem("dark-mode", "light");
+      localStorage.setItem("color-text", "#545454");
     }
 
     alternarModoEscuro();

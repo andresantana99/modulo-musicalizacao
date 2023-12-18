@@ -1,24 +1,5 @@
 $(document).ready(function () {
 
-  // Modal de confirmação para retorno à tela principal
-  $("#home").click(function (e) {
-    e.preventDefault();
-    Swal.fire({
-      title: "Você deseja ir para a Tela Inicial?",
-      text: "O seu progresso nessa etapa poderá ser perdido!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Confirmar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "../../index.html";
-      }
-    });
-  });
-
   //localStorage.setItem("pagina_etapa3", 1);
 
   if (localStorage.getItem("pagina_etapa3") === null) {
