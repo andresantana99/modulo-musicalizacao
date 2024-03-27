@@ -128,39 +128,54 @@
             let auxiliar;
             switch (botao) {
                 case "btnSemibreve":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #820742; width: 50% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #820742; width: 50% !important;"><img src="../../assets/img/semibreve.png" width="32" height="32"
+                        alt="Símbolo Semibreve" /></td>`);
 
                     auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
                     $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 1);
                     break;
 
                 case "btnSeminima":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"><img src="../../assets/img/seminima.png" width="32" height="32"
+                        alt="Símbolo Seminima" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"><img src="../../assets/img/seminima.png" width="32" height="32"
+                        alt="Símbolo Seminima" /></td>`);
 
                     auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
                     $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 2);
                     break;
 
                 case "btnColcheia":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"><img src="../../assets/img/colcheia.png" width="32" height="32"
+                        alt="Símbolo Colcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"><img src="../../assets/img/colcheia.png" width="32" height="32"
+                        alt="Símbolo Colcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"><img src="../../assets/img/colcheia.png" width="32" height="32"
+                        alt="Símbolo Colcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"><img src="../../assets/img/colcheia.png" width="32" height="32"
+                        alt="Símbolo Colcheia" /></td>`);
 
                     auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
                     $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 4);
                     break;
 
                 case "btnSemicolcheia":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
+                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>`);
 
                     auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
                     $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 8);
