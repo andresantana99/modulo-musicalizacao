@@ -1,7 +1,7 @@
 <div class="row p-3 mb-4 bg-body-tertiary rounded-3" style="min-height: 400px;">
     <div class="text-center">
         <p class="fs-4">Por fim, neste exercício teremos a demonstração de um Metrônomo. Configure
-            a duração dos intervalos de tempo do metrônomo, clique no Play e se divirta.
+            a duração dos intervalos de tempo do metrônomo, clique no Iniciar e se divirta.
         </p>
         <br>
     </div>
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <h4 class="pt-5">Arraste o scroll abaixo para definir a frequência dos intervalos em batidas por minuto (BPM):</h4>
+    <h4 class="pt-5">Arraste o scroll abaixo para definir a frequência dos intervalos em batidas por minuto (BPM), depois basta clicar em Iniciar:</h4>
     <div class="container text-center">
         <div class="row justify-content-center p-3">
             <div class="col-12">
@@ -37,12 +37,12 @@
                 <input type="range" class="form-range" min="1" max="200" value="10" id="bpm" />
                 <audio id="audio" src="../../clap.wav"></audio>
             </div>
-            <div class="col-12">
-                <button type="button" class="btn btn-outline-primary" id="play">Play</button>
+            <div class="pt-3 col-12">
+                <button type="button" class="btn btn-lg btn-success w-25" id="play">Iniciar</button>
             </div>
         </div>
     </div>
-    <p class="pt-5 fs-4" style="text-align: start !important;"><u>Legenda de Cores</u></p>
+    <p class="pt-3 fs-4" style="text-align: start !important;"><u>Legenda de Cores</u></p>
     <div class="table-responsive">
         <table class="table">
             <tbody>
@@ -86,8 +86,6 @@
         var timerTick = null;
         var timerBlueSquare = null;
 
-        //var interval = ;
-
         function HideAndShow(square) {
             if (square.css('display') == 'none') {
                 square.show();
@@ -113,40 +111,16 @@
                 MinimaRectangule.stop(true, true).fadeIn();
                 SemiBreveRectangule.stop(true, true).fadeIn();
                 interval = (60 * 1000) / currentBpm;
-                timerTick = setInterval(function () {
-                    tick();
-                    SeminimaRectangule.fadeOut(interval / 2);
-                    SeminimaRectangule.fadeIn(interval / 2);
-
-                    ColcheiaRectangule.fadeOut(interval / 4);
-                    ColcheiaRectangule.fadeIn(interval / 4);
-                    ColcheiaRectangule.fadeOut(interval / 4);
-                    ColcheiaRectangule.fadeIn(interval / 4);
-
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-
-                    MinimaRectangule.fadeOut(interval);
-                    MinimaRectangule.fadeIn(interval);
-
-                    SemiBreveRectangule.fadeOut(interval * 2);
-                    SemiBreveRectangule.fadeIn(interval * 2);
-
-                }, interval);
-
+                timerTick = setInterval(function () {blink()}, interval);
             }
         });
 
         $(play).click(function (e) {
             e.preventDefault();
             if (isPlaying) {
-                play.html('Play');
+                play.html('Iniciar');
+                play.removeClass('btn-danger');
+                play.addClass('btn-success');
                 clearInterval(timerTick);
                 SeminimaRectangule.stop(true, true).fadeIn();
                 ColcheiaRectangule.stop(true, true).fadeIn();
@@ -154,39 +128,42 @@
                 MinimaRectangule.stop(true, true).fadeIn();
                 SemiBreveRectangule.stop(true, true).fadeIn();
             } else {
-                play.html('Stop')
+                play.html('Parar');
+                play.removeClass('btn-success');
+                play.addClass('btn-danger');
                 interval = (60 * 1000) / currentBpm;
-                timerTick = setInterval(function () {
-                    tick();
-                    SeminimaRectangule.fadeOut(interval / 2);
-                    SeminimaRectangule.fadeIn(interval / 2);
-
-                    ColcheiaRectangule.fadeOut(interval / 4);
-                    ColcheiaRectangule.fadeIn(interval / 4);
-                    ColcheiaRectangule.fadeOut(interval / 4);
-                    ColcheiaRectangule.fadeIn(interval / 4);
-
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-                    SemiColcheiaRectangule.fadeOut(interval / 8);
-                    SemiColcheiaRectangule.fadeIn(interval / 8);
-
-                    MinimaRectangule.fadeOut(interval);
-                    MinimaRectangule.fadeIn(interval);
-
-                    SemiBreveRectangule.fadeOut(interval * 2);
-                    SemiBreveRectangule.fadeIn(interval * 2);
-
-                }, interval);
+                blink();
+                timerTick = setInterval(function () {blink()}, interval);
             }
 
             isPlaying = !isPlaying;
         });
 
+        function blink() {
+            tick();
+            SeminimaRectangule.fadeOut(interval / 2);
+            SeminimaRectangule.fadeIn(interval / 2);
+
+            ColcheiaRectangule.fadeOut(interval / 4);
+            ColcheiaRectangule.fadeIn(interval / 4);
+            ColcheiaRectangule.fadeOut(interval / 4);
+            ColcheiaRectangule.fadeIn(interval / 4);
+
+            SemiColcheiaRectangule.fadeOut(interval / 8);
+            SemiColcheiaRectangule.fadeIn(interval / 8);
+            SemiColcheiaRectangule.fadeOut(interval / 8);
+            SemiColcheiaRectangule.fadeIn(interval / 8);
+            SemiColcheiaRectangule.fadeOut(interval / 8);
+            SemiColcheiaRectangule.fadeIn(interval / 8);
+            SemiColcheiaRectangule.fadeOut(interval / 8);
+            SemiColcheiaRectangule.fadeIn(interval / 8);
+
+            MinimaRectangule.fadeOut(interval);
+            MinimaRectangule.fadeIn(interval);
+
+            SemiBreveRectangule.fadeOut(interval * 2);
+            SemiBreveRectangule.fadeIn(interval * 2);
+        };
 
 
         // let numeroCompasso = 0;
