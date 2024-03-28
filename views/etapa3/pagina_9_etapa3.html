@@ -7,21 +7,25 @@
     </div>
     <div class="container text-center">
         <div class="row align-items-center">
+            <div class="col-12 col-md-6">
+                <div id="orangeSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #820742; color: white;"><img src="../../assets/img/semibreve.png" width="32" height="40"
+                    alt="Símbolo Semibreve" /></div>
+            </div>
             <div class="col-12 col-md-6 py-4">
-                <div id="" type="button" class="btn w-100"
-                    style="min-height: 55px; background-color: #17867C; color: white;"></div>
+                <div id="blueSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #17867C; color: white;"><img src="../../assets/img/seminima.png" width="32" height="40"
+                    alt="Símbolo Seminima" /></div>
             </div>
             <div class="col-12 col-md-6">
-                <div id="" type="button" class="btn w-100"
-                    style="min-height: 55px; background-color: #E6972A; color: white;"></div>
+                <div id="redSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #E6972A; color: white;"><img src="../../assets/img/colcheia.png" width="32" height="40"
+                    alt="Símbolo Colcheia" /></div>
             </div>
             <div class="col-12 col-md-6">
-                <div id="" type="button" class="btn w-100"
-                    style="min-height: 55px; background-color: #B9C303; color: white;"></div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div id="" type="button" class="btn w-100"
-                    style="min-height: 55px; background-color: #820742; color: white;"></div>
+                <div id="greenSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #B9C303; color: white;"><img src="../../assets/img/semicolcheia.png" width="32" height="40"
+                    alt="Símbolo Semicolcheia" /></div>
             </div>
         </div>
     </div>
@@ -31,10 +35,9 @@
             <div class="col-12">
                 <h4><strong id="titlebpm">10 BPM</strong></h4>
                 <input type="range" class="form-range" min="1" max="200" value="10" id="bpm" />
-                <audio id="audio" src="clap.wav"></audio>
+                <audio id="audio" src="../../clap.wav"></audio>
             </div>
             <div class="col-12">
-                <button type="button" class="btn btn-outline-primary" id="play">Play</button>
                 <button type="button" class="btn btn-outline-primary" id="play">Play</button>
             </div>
         </div>
@@ -44,20 +47,20 @@
         <table class="table">
             <tbody>
                 <tr style="width: 50%;">
+                    <td style="background-color: #820742;"><img src="../../assets/img/semibreve.png" width="32" height="32"
+                        alt="Símbolo Semibreve" /></td>
+                    <td style="width: 45%;">Semibreve</td>
                     <td style="background-color: #17867C;"><img src="../../assets/img/seminima.png" width="32" height="32"
                         alt="Símbolo Seminima" /></td>
                     <td style="width: 45%;">Semínima</td>
-                    <td style="background-color: #B9C303;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
-                        alt="Símbolo Semicolcheia" /></td>
-                    <td style="width: 45%;">Semicolcheia</td>
                 </tr>
                 <tr>
                     <td style="background-color: #E6972A;"><img src="../../assets/img/colcheia.png" width="32" height="32"
                         alt="Símbolo Colcheia" /></td>
                     <td>Colcheia</td>
-                    <td style="background-color: #820742;"><img src="../../assets/img/semibreve.png" width="32" height="32"
-                        alt="Símbolo Semibreve" /></td>
-                    <td>Semibreve</td>
+                    <td style="background-color: #B9C303;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>
+                    <td>Semicolcheia</td>
                 </tr>
             </tbody>
         </table>
@@ -66,116 +69,236 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        let numeroCompasso = 0;
-        let figurasPrimeiroCompasso = 0;
-        let figurasSegundoCompasso = 0;
+        const bpm = $("#bpm");
+        const h4 = $("#titlebpm");
+        const play = $("#play");
+        const audio = document.getElementById("audio");
 
-        $("#btnSeminima").click(function (e) { adicionaFigura(this.id); });
-        $("#btnColcheia").click(function (e) { adicionaFigura(this.id); });
-        $("#btnSemicolcheia").click(function (e) { adicionaFigura(this.id); });
-        $("#btnSemibreve").click(function (e) { adicionaFigura(this.id); });
+        const SeminimaRectangule = $('#blueSquare');
+        const ColcheiaRectangule = $('#redSquare');
+        const SemiColcheiaRectangule = $('#greenSquare');
+        const MinimaRectangule = $('#yellowSquare');
+        const SemiBreveRectangule = $('#orangeSquare');
 
-        function adicionaFigura(botao) {
+        var currentBpm = 40;
+        var isPlaying = false;
+        var interval = null;
+        var timerTick = null;
+        var timerBlueSquare = null;
 
-            if (figurasPrimeiroCompasso < 2) {
-                numeroCompasso = 1;
-                figurasPrimeiroCompasso++;
-            } else if (figurasSegundoCompasso < 2) {
-                numeroCompasso = 2;
-                figurasSegundoCompasso++;
+        //var interval = ;
+
+        function HideAndShow(square) {
+            if (square.css('display') == 'none') {
+                square.show();
             } else {
-                numeroCompasso = 0;
-                Swal.fire({
-                    icon: "warning",
-                    title: "Compasso Completo!",
-                    confirmButtonColor: "#28A745",
-                    cancelButtonColor: "#DC3545",
-                    showCancelButton: true,
-                    confirmButtonText: "Sim",
-                    cancelButtonText: "Não",
-                    html: "Todas as unidades de tempo dos dois compassos já foram preenchidas. Você deseja limpar os compassos e começar novamente?",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        limparCompassos();
-                        Swal.fire({
-                            icon: "success",
-                            title: "Feito!",
-                            timer: 1500,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                        });
-                    }
-                });
-                return;
-            }
-
-            if (numeroCompasso == 0) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Erro inesperado!",
-                    html: "Por favor, tente novamente mais tarde.",
-                    confirmButtonColor: "#3085d6",
-                    footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Contate-nos.</a>',
-                });
-                return;
-            }
-
-            let auxiliar;
-            switch (botao) {
-                case "btnSemibreve":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #820742; width: 50% !important;"></td>`);
-
-                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
-                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 1);
-                    break;
-
-                case "btnSeminima":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
-
-                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
-                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 2);
-                    break;
-
-                case "btnColcheia":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
-
-                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
-                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 4);
-                    break;
-
-                case "btnSemicolcheia":
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-                    $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
-
-                    auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
-                    $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 8);
-                    break;
-
-                default:
-                    Swal.fire({
-                        icon: "error",
-                        title: "Erro inesperado!",
-                        html: "Por favor, tente novamente mais tarde.",
-                        confirmButtonColor: "#3085d6",
-                        footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Contate-nos.</a>',
-                    });
-                    break;
+                square.hide();
             }
         }
 
-        function limparCompassos() {
-            $(".unidades-tempo").children("td").remove();
-            numeroCompasso = figurasPrimeiroCompasso = figurasSegundoCompasso = 0;
+        function tick() {
+            audio.currentTime = 0;
+            audio.play();
         }
+
+        $(bpm).change(function (e) {
+            e.preventDefault();
+            h4.html(this.value + ' bpm');
+            currentBpm = parseInt(this.value);
+            if (isPlaying) {
+                clearInterval(timerTick);
+                SeminimaRectangule.stop(true, true).fadeIn();
+                ColcheiaRectangule.stop(true, true).fadeIn();
+                SemiColcheiaRectangule.stop(true, true).fadeIn();
+                MinimaRectangule.stop(true, true).fadeIn();
+                SemiBreveRectangule.stop(true, true).fadeIn();
+                interval = (60 * 1000) / currentBpm;
+                timerTick = setInterval(function () {
+                    tick();
+                    SeminimaRectangule.fadeOut(interval / 2);
+                    SeminimaRectangule.fadeIn(interval / 2);
+
+                    ColcheiaRectangule.fadeOut(interval / 4);
+                    ColcheiaRectangule.fadeIn(interval / 4);
+                    ColcheiaRectangule.fadeOut(interval / 4);
+                    ColcheiaRectangule.fadeIn(interval / 4);
+
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+
+                    MinimaRectangule.fadeOut(interval);
+                    MinimaRectangule.fadeIn(interval);
+
+                    SemiBreveRectangule.fadeOut(interval * 2);
+                    SemiBreveRectangule.fadeIn(interval * 2);
+
+                }, interval);
+
+            }
+        });
+
+        $(play).click(function (e) {
+            e.preventDefault();
+            if (isPlaying) {
+                play.html('Play');
+                clearInterval(timerTick);
+                SeminimaRectangule.stop(true, true).fadeIn();
+                ColcheiaRectangule.stop(true, true).fadeIn();
+                SemiColcheiaRectangule.stop(true, true).fadeIn();
+                MinimaRectangule.stop(true, true).fadeIn();
+                SemiBreveRectangule.stop(true, true).fadeIn();
+            } else {
+                play.html('Stop')
+                interval = (60 * 1000) / currentBpm;
+                timerTick = setInterval(function () {
+                    tick();
+                    SeminimaRectangule.fadeOut(interval / 2);
+                    SeminimaRectangule.fadeIn(interval / 2);
+
+                    ColcheiaRectangule.fadeOut(interval / 4);
+                    ColcheiaRectangule.fadeIn(interval / 4);
+                    ColcheiaRectangule.fadeOut(interval / 4);
+                    ColcheiaRectangule.fadeIn(interval / 4);
+
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+                    SemiColcheiaRectangule.fadeOut(interval / 8);
+                    SemiColcheiaRectangule.fadeIn(interval / 8);
+
+                    MinimaRectangule.fadeOut(interval);
+                    MinimaRectangule.fadeIn(interval);
+
+                    SemiBreveRectangule.fadeOut(interval * 2);
+                    SemiBreveRectangule.fadeIn(interval * 2);
+
+                }, interval);
+            }
+
+            isPlaying = !isPlaying;
+        });
+
+
+
+        // let numeroCompasso = 0;
+        // let figurasPrimeiroCompasso = 0;
+        // let figurasSegundoCompasso = 0;
+
+        // $("#btnSeminima").click(function (e) { adicionaFigura(this.id); });
+        // $("#btnColcheia").click(function (e) { adicionaFigura(this.id); });
+        // $("#btnSemicolcheia").click(function (e) { adicionaFigura(this.id); });
+        // $("#btnSemibreve").click(function (e) { adicionaFigura(this.id); });
+
+        // function adicionaFigura(botao) {
+
+        //     if (figurasPrimeiroCompasso < 2) {
+        //         numeroCompasso = 1;
+        //         figurasPrimeiroCompasso++;
+        //     } else if (figurasSegundoCompasso < 2) {
+        //         numeroCompasso = 2;
+        //         figurasSegundoCompasso++;
+        //     } else {
+        //         numeroCompasso = 0;
+        //         Swal.fire({
+        //             icon: "warning",
+        //             title: "Compasso Completo!",
+        //             confirmButtonColor: "#28A745",
+        //             cancelButtonColor: "#DC3545",
+        //             showCancelButton: true,
+        //             confirmButtonText: "Sim",
+        //             cancelButtonText: "Não",
+        //             html: "Todas as unidades de tempo dos dois compassos já foram preenchidas. Você deseja limpar os compassos e começar novamente?",
+        //         }).then((result) => {
+        //             if (result.isConfirmed) {
+        //                 limparCompassos();
+        //                 Swal.fire({
+        //                     icon: "success",
+        //                     title: "Feito!",
+        //                     timer: 1500,
+        //                     showConfirmButton: false,
+        //                     timerProgressBar: true,
+        //                 });
+        //             }
+        //         });
+        //         return;
+        //     }
+
+        //     if (numeroCompasso == 0) {
+        //         Swal.fire({
+        //             icon: "error",
+        //             title: "Erro inesperado!",
+        //             html: "Por favor, tente novamente mais tarde.",
+        //             confirmButtonColor: "#3085d6",
+        //             footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Contate-nos.</a>',
+        //         });
+        //         return;
+        //     }
+
+        //     let auxiliar;
+        //     switch (botao) {
+        //         case "btnSemibreve":
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #820742; width: 50% !important;"></td>`);
+
+        //             auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+        //             $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 1);
+        //             break;
+
+        //         case "btnSeminima":
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #17867C; width: 25% !important;"></td>`);
+
+        //             auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+        //             $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 2);
+        //             break;
+
+        //         case "btnColcheia":
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #E6972A; width: 12.5% !important;"></td>`);
+
+        //             auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+        //             $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 4);
+        //             break;
+
+        //         case "btnSemicolcheia":
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+        //             $(`.compasso-${numeroCompasso}`).append(`<td style="background-color: #B9C303; width: 6.25% !important;"></td>`);
+
+        //             auxiliar = parseInt($(`#th-${numeroCompasso}`).attr("colspan"));
+        //             $(`#th-${numeroCompasso}`).attr("colspan", auxiliar + 8);
+        //             break;
+
+        //         default:
+        //             Swal.fire({
+        //                 icon: "error",
+        //                 title: "Erro inesperado!",
+        //                 html: "Por favor, tente novamente mais tarde.",
+        //                 confirmButtonColor: "#3085d6",
+        //                 footer: '<a href="https://github.com/andresantana99/modulo-musicalizacao">Precisa de ajuda? Contate-nos.</a>',
+        //             });
+        //             break;
+        //     }
+        // }
+
+        // function limparCompassos() {
+        //     $(".unidades-tempo").children("td").remove();
+        //     numeroCompasso = figurasPrimeiroCompasso = figurasSegundoCompasso = 0;
+        // }
     });
 </script>
