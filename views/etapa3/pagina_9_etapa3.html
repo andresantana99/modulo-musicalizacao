@@ -78,7 +78,7 @@
         const ColcheiaRectangule = $('#redSquare');
         const SemiColcheiaRectangule = $('#greenSquare');
         const MinimaRectangule = $('#orangeSquare');
-        const SemiBreveRectangule = $('#yellowSquare');
+        // const SemiBreveRectangule = $('#yellowSquare');
 
         var currentBpm = 40;
         var isPlaying = false;
@@ -122,7 +122,7 @@
                 ColcheiaRectangule.stop(true, true).fadeIn();
                 SemiColcheiaRectangule.stop(true, true).fadeIn();
                 MinimaRectangule.stop(true, true).fadeIn();
-                SemiBreveRectangule.stop(true, true).fadeIn();
+                // SemiBreveRectangule.stop(true, true).fadeIn();
                 interval = (60 * 1000) / currentBpm;
                 timerTick = setInterval(function () {blink()}, interval);
             }
@@ -139,7 +139,7 @@
                 ColcheiaRectangule.stop(true, true).fadeIn();
                 SemiColcheiaRectangule.stop(true, true).fadeIn();
                 MinimaRectangule.stop(true, true).fadeIn();
-                SemiBreveRectangule.stop(true, true).fadeIn();
+                // SemiBreveRectangule.stop(true, true).fadeIn();
             } else {
                 play.html('Parar');
                 play.removeClass('btn-success');
@@ -174,8 +174,8 @@
             MinimaRectangule.fadeOut(interval);
             MinimaRectangule.fadeIn(interval);
 
-            SemiBreveRectangule.fadeOut(interval * 2);
-            SemiBreveRectangule.fadeIn(interval * 2);
+            // SemiBreveRectangule.fadeOut(interval * 2);
+            // SemiBreveRectangule.fadeIn(interval * 2);
         };
     });
 </script>
