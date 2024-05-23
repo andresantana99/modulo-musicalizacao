@@ -29,14 +29,30 @@
             </div>
         </div>
     </div>
-    <h4 class="pt-4">Arraste o scroll abaixo para definir a frequência dos intervalos em batidas por minuto (BPM), depois basta clicar em Iniciar:</h4>
+    <h4 class="pt-4">Defina a frequência dos intervalos clicando nos valores pré definidos abaixo, em batidas por minuto (BPM). Em seguida, basta clicar em Iniciar:</h4>
     <div class="container text-center">
         <div class="row justify-content-center p-3">
             <div class="col-12">
-                <h4><strong id="titlebpm">70 BPM</strong></h4>
-                <input type="range" class="form-range" min="40" max="130" value="70" id="bpm" />
-                <audio id="audio" src="../../clap.wav"></audio>
+                <!-- <h4><strong id="titlebpm">70 BPM</strong></h4>
+                <input type="range" class="form-range" min="40" max="130" value="70" id="bpm" /> -->
+                
             </div>
+            <div class="col-12 col-md-4 py-4">
+                <button id="firstButton" type="button" class="btn btn-outline-primary w-100" style="min-height: 55px; font-size: 22px;" data-selected="0">
+                    30 BPM
+                </button>
+            </div>
+            <div class="col-12 col-md-4 py-4">
+                <button id="secondButton" type="button" class="btn btn-outline-primary w-100" style="min-height: 55px; font-size: 22px;" data-selected="0">
+                    70 BPM
+                </button>
+            </div>
+            <div class="col-12 col-md-4 py-4">
+                <button id="thirdButton" type="button" class="btn btn-outline-primary w-100" style="min-height: 55px; font-size: 22px;" data-selected="0">
+                    130 BPM
+                </button>
+            </div>
+            <audio id="audio" src="../../clap.wav"></audio>
             <div class="pt-3 col-12">
                 <button type="button" class="btn btn-lg btn-success" id="play">Iniciar</button>
             </div>
@@ -99,36 +115,41 @@
             audio.play();
         }
 
-        $(bpm).change(function (e) {
-            e.preventDefault();
+        $("#firstButton").click( function(e) {
+            if($("#firstButton").attr('data-selected') == "0")
+                selecionarBotao("firstButton");
+            else
+                removerSelecionar("firstButton");
+        });
 
-            if (parseInt(this.value) <= 55) {
-                h4.html('40 bpm');
-                currentBpm = parseInt(40);
-                $(bpm).val(40);
-            } else if (parseInt(this.value) > 55 && parseInt(this.value) <= 100) {
-                h4.html('70 bpm');
-                currentBpm = parseInt(70);
-                $(bpm).val(70);
-            } else {
-                h4.html('130 bpm');
-                currentBpm = parseInt(130);
-                $(bpm).val(130);
-            }
+        $("#secondButton").click( function(e) {
+            if($("#secondButton").attr('data-selected') == "0") 
+                selecionarBotao("secondButton");
+            else
+                removerSelecionar("secondButton");
+        });
 
-            if (isPlaying) {
-                clearInterval(timerTick);
-                SeminimaRectangule.stop(true, true).fadeIn();
-                ColcheiaRectangule.stop(true, true).fadeIn();
-                SemiColcheiaRectangule.stop(true, true).fadeIn();
-                MinimaRectangule.stop(true, true).fadeIn();
-                // SemiBreveRectangule.stop(true, true).fadeIn();
-                interval = (60 * 1000) / currentBpm;
-                timerTick = setInterval(function () {blink()}, interval);
-            }
+        $("#thirdButton").click( function(e) {
+            if($("#thirdButton").attr('data-selected') == "0") 
+                selecionarBotao("thirdButton");
+            else
+                removerSelecionar("thirdButton");
         });
 
         $(play).click(function (e) {
+            if ($("#thirdButton").attr('data-selected') == "1"){
+                removerSelecionar("secondButton");
+                removerSelecionar("firstButton");
+                alternarFrequencia(130);
+
+            } else if ($("#secondButton").attr('data-selected') == "1") {
+                removerSelecionar("firstButton");
+                alternarFrequencia(70);
+                
+            } else {
+                alternarFrequencia(30);
+            }
+
             e.preventDefault();
             if (isPlaying) {
                 play.html('Iniciar');
@@ -177,5 +198,32 @@
             // SemiBreveRectangule.fadeOut(interval * 2);
             // SemiBreveRectangule.fadeIn(interval * 2);
         };
+
+        function alternarFrequencia(frequencia){
+            currentBpm = parseInt(frequencia);
+
+            if (isPlaying) {
+                clearInterval(timerTick);
+                SeminimaRectangule.stop(true, true).fadeIn();
+                ColcheiaRectangule.stop(true, true).fadeIn();
+                SemiColcheiaRectangule.stop(true, true).fadeIn();
+                MinimaRectangule.stop(true, true).fadeIn();
+                // SemiBreveRectangule.stop(true, true).fadeIn();
+                interval = (60 * 1000) / currentBpm;
+                timerTick = setInterval(function () {blink()}, interval);
+            }
+        };
+
+        function selecionarBotao(nomeBotao) {
+            $(`#${nomeBotao}`).removeClass("btn-outline-primary");
+            $(`#${nomeBotao}`).addClass("btn-primary");
+            $(`#${nomeBotao}`).attr('data-selected','1');
+        }
+
+        function removerSelecionar(nomeBotao) {
+            $(`#${nomeBotao}`).removeClass("btn-primary");
+            $(`#${nomeBotao}`).addClass("btn-outline-primary");
+            $(`#${nomeBotao}`).attr('data-selected','0');
+        }
     });
 </script>
