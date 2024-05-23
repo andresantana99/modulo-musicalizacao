@@ -116,6 +116,10 @@
         }
 
         $("#firstButton").click( function(e) {
+            if (isPlaying){
+                $(play).click();
+            }
+
             if($("#firstButton").attr('data-selected') == "0")
                 selecionarBotao("firstButton");
             else
@@ -123,6 +127,10 @@
         });
 
         $("#secondButton").click( function(e) {
+            if (isPlaying){
+                $(play).click();
+            }
+
             if($("#secondButton").attr('data-selected') == "0") 
                 selecionarBotao("secondButton");
             else
@@ -130,6 +138,10 @@
         });
 
         $("#thirdButton").click( function(e) {
+            if (isPlaying){
+                $(play).click();
+            }
+
             if($("#thirdButton").attr('data-selected') == "0") 
                 selecionarBotao("thirdButton");
             else
@@ -145,7 +157,7 @@
             } else if ($("#secondButton").attr('data-selected') == "1") {
                 removerSelecionar("firstButton");
                 alternarFrequencia(70);
-                
+
             } else {
                 alternarFrequencia(30);
             }
