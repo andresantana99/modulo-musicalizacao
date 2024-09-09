@@ -1,26 +1,35 @@
 $(document).ready(function () {
-  $("#btn-Etapa1").click(function (e) {
+
+  //localStorage.setItem("pagina_etapa3", 1);
+
+  if (localStorage.getItem("pagina_etapa1") === null) {
+    localStorage.setItem("pagina_etapa1", 1);
+    $("#conteudo").load(`pagina_1_etapa1.html`);
+  } else {
+    $("#conteudo").load(`pagina_${localStorage.getItem("pagina_etapa1")}_etapa1.html`);
+  }
+
+  // #region Funcionalidade de avançar ou retornar a tela
+  $("#btnVoltar").click((e) => {
     e.preventDefault();
-    window.location.href = "../../views/etapa1/index.html";
+    if (parseInt(localStorage.getItem("pagina_etapa1")) <= 1) {
+      localStorage.setItem("pagina_etapa1", 1);
+      window.location.href = "../../views/selecaoEtapa/index.html";
+    } else {
+      localStorage.setItem("pagina_etapa1", parseInt(localStorage.getItem("pagina_etapa1")) - 1);
+      $("#conteudo").load(`pagina_${localStorage.getItem("pagina_etapa1")}_etapa1.html`);
+    }
   });
 
-  $("#btn-Etapa2").click(function (e) {
+  $("#btnAvancar").click((e) => {
     e.preventDefault();
-    window.location.href = "../../views/etapa2/index.html";
+    if (parseInt(localStorage.getItem("pagina_etapa1")) >= 1) {
+      localStorage.setItem("pagina_etapa1", 1);
+      window.location.href = "../../views/selecaoEtapa/index.html";
+    } else {
+      localStorage.setItem("pagina_etapa1", parseInt(localStorage.getItem("pagina_etapa1")) + 1);
+      $("#conteudo").load(`pagina_${localStorage.getItem("pagina_etapa1")}_etapa1.html`);
+    }
   });
-
-  $("#btn-Etapa3").click(function (e) {
-    e.preventDefault();
-    window.location.href = "../../views/etapa3/index.html";
-  });
-
-  $("#btn-Etapa4").click(function (e) {
-    e.preventDefault();
-    window.location.href = "../../views/etapa4/index.html";
-  });
-
-  $("#btn-Etapa5").click(function (e) {
-    e.preventDefault();
-    window.location.href = "../../views/etapa5/index.html";
-  });
+  // #endregion
 });
