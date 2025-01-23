@@ -23,7 +23,7 @@ $(document).ready(function () {
 
   $("#btnAvancar").click((e) => {
     e.preventDefault();
-    if (parseInt(localStorage.getItem("pagina_etapa4")) >= 3) {
+    if (parseInt(localStorage.getItem("pagina_etapa4")) >= 4) {
       localStorage.setItem("pagina_etapa4", 1);
       window.location.href = "../../views/selecaoEtapa/index.html";
     } else {
