@@ -24,7 +24,7 @@ $(document).ready(function () {
 
   $("#btnAvancar").click((e) => {
     e.preventDefault();
-    if (parseInt(localStorage.getItem("pagina_etapa1")) >= 11) {
+    if (parseInt(localStorage.getItem("pagina_etapa1")) >= 19) {
       localStorage.setItem("pagina_etapa1", 1);
       window.location.href = "../../views/selecaoEtapa/index.html";
       // Mudar para
@@ -47,7 +47,7 @@ $(document).ready(function () {
   // #region Funcionalidade de ocultar ou exibir botão seleção de etapa
   function HideAndShowSelecao() {
     console.log(parseInt(localStorage.getItem("pagina_etapa1")));
-    if (parseInt(localStorage.getItem("pagina_etapa1")) == 11) {
+    if (parseInt(localStorage.getItem("pagina_etapa1")) == 19) {
       $("#btnSelecaoEtapa").show();
     } else {
       $("#btnSelecaoEtapa").hide();
