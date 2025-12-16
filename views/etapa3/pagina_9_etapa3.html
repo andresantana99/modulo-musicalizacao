@@ -178,11 +178,11 @@
                 play.removeClass('btn-danger');
                 play.addClass('btn-success');
                 clearInterval(timerTick);
-                SeminimaRectangule.stop(true, true).fadeIn();
-                ColcheiaRectangule.stop(true, true).fadeIn();
-                SemiColcheiaRectangule.stop(true, true).fadeIn();
-                MinimaRectangule.stop(true, true).fadeIn();
-                // SemiBreveRectangule.stop(true, true).fadeIn();
+                SeminimaRectangule.stop(true, true).show();
+                ColcheiaRectangule.stop(true, true).show();
+                SemiColcheiaRectangule.stop(true, true).show();
+                MinimaRectangule.stop(true, true).show();
+                // SemiBreveRectangule.stop(true, true).show();
             } else {
                 play.html('Parar');
                 play.removeClass('btn-success');
@@ -195,42 +195,91 @@
             isPlaying = !isPlaying;
         });
 
+        // function blink() {
+        //     tick();
+        //     SeminimaRectangule.hide(interval / 2);
+        //     SeminimaRectangule.show(interval / 2);
+
+        //     ColcheiaRectangule.hide(interval / 4);
+        //     ColcheiaRectangule.show(interval / 4);
+        //     ColcheiaRectangule.hide(interval / 4);
+        //     ColcheiaRectangule.show(interval / 4);
+
+        //     SemiColcheiaRectangule.hide(interval / 8);
+        //     SemiColcheiaRectangule.show(interval / 8);
+        //     SemiColcheiaRectangule.hide(interval / 8);
+        //     SemiColcheiaRectangule.show(interval / 8);
+        //     SemiColcheiaRectangule.hide(interval / 8);
+        //     SemiColcheiaRectangule.show(interval / 8);
+        //     SemiColcheiaRectangule.hide(interval / 8);
+        //     SemiColcheiaRectangule.show(interval / 8);
+
+        //     MinimaRectangule.hide(interval);
+        //     MinimaRectangule.show(interval);
+
+        //     // SemiBreveRectangule.hide(interval * 2);
+        //     // SemiBreveRectangule.show(interval * 2);
+        // };
+
+        // #region Funções para ajuste de controle visual (remover Reflow)
+        function off(e) {
+            e.css('visibility', 'hidden');
+        }
+
+        function on(e) {
+            e.css('visibility', 'visible');
+        }
+        // #endregion
+
+        // #region Resetar exibição de elementos
+        function resetAll() {
+            on(SeminimaRectangule);
+            on(ColcheiaRectangule);
+            on(SemiColcheiaRectangule);
+            on(MinimaRectangule);
+        }
+        // #endregion
+
+        // #region Blink sem efeito de transição
         function blink() {
             tick();
-            SeminimaRectangule.fadeOut(interval / 2);
-            SeminimaRectangule.fadeIn(interval / 2);
 
-            ColcheiaRectangule.fadeOut(interval / 4);
-            ColcheiaRectangule.fadeIn(interval / 4);
-            ColcheiaRectangule.fadeOut(interval / 4);
-            ColcheiaRectangule.fadeIn(interval / 4);
+            // Seminima (1)
+            off(SeminimaRectangule);
+            setTimeout(() => on(SeminimaRectangule), interval / 2);
 
-            SemiColcheiaRectangule.fadeOut(interval / 8);
-            SemiColcheiaRectangule.fadeIn(interval / 8);
-            SemiColcheiaRectangule.fadeOut(interval / 8);
-            SemiColcheiaRectangule.fadeIn(interval / 8);
-            SemiColcheiaRectangule.fadeOut(interval / 8);
-            SemiColcheiaRectangule.fadeIn(interval / 8);
-            SemiColcheiaRectangule.fadeOut(interval / 8);
-            SemiColcheiaRectangule.fadeIn(interval / 8);
+            // Colcheia (2)
+            off(ColcheiaRectangule);
+            setTimeout(() => on(ColcheiaRectangule), interval / 4);
+            setTimeout(() => off(ColcheiaRectangule), interval / 2);
+            setTimeout(() => on(ColcheiaRectangule), (interval * 3) / 4);
 
-            MinimaRectangule.fadeOut(interval);
-            MinimaRectangule.fadeIn(interval);
+            // Semicolcheia (4)
+            off(SemiColcheiaRectangule);
+            setTimeout(() => on(SemiColcheiaRectangule), interval / 8);
+            setTimeout(() => off(SemiColcheiaRectangule), interval / 4);
+            setTimeout(() => on(SemiColcheiaRectangule), (interval * 3) / 8);
+            setTimeout(() => off(SemiColcheiaRectangule), interval / 2);
+            setTimeout(() => on(SemiColcheiaRectangule), (interval * 5) / 8);
+            setTimeout(() => off(SemiColcheiaRectangule), (interval * 3) / 4);
+            setTimeout(() => on(SemiColcheiaRectangule), (interval * 7) / 8);
 
-            // SemiBreveRectangule.fadeOut(interval * 2);
-            // SemiBreveRectangule.fadeIn(interval * 2);
-        };
+            // Mínima (1 a cada 2 tempos)
+            off(MinimaRectangule);
+            setTimeout(() => on(MinimaRectangule), interval);
+        }
+        // #endregion
 
         function alternarFrequencia(frequencia){
             currentBpm = parseInt(frequencia);
 
             if (isPlaying) {
                 clearInterval(timerTick);
-                SeminimaRectangule.stop(true, true).fadeIn();
-                ColcheiaRectangule.stop(true, true).fadeIn();
-                SemiColcheiaRectangule.stop(true, true).fadeIn();
-                MinimaRectangule.stop(true, true).fadeIn();
-                // SemiBreveRectangule.stop(true, true).fadeIn();
+                SeminimaRectangule.stop(true, true).show();
+                ColcheiaRectangule.stop(true, true).show();
+                SemiColcheiaRectangule.stop(true, true).show();
+                MinimaRectangule.stop(true, true).show();
+                // SemiBreveRectangule.stop(true, true).show();
                 interval = (60 * 1000) / currentBpm;
                 timerTick = setInterval(function () {blink()}, interval);
             }
