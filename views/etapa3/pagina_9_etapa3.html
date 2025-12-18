@@ -178,48 +178,33 @@
                 play.removeClass('btn-danger');
                 play.addClass('btn-success');
                 clearInterval(timerTick);
-                SeminimaRectangule.stop(true, true).show();
-                ColcheiaRectangule.stop(true, true).show();
-                SemiColcheiaRectangule.stop(true, true).show();
-                MinimaRectangule.stop(true, true).show();
-                // SemiBreveRectangule.stop(true, true).show();
+
+                beatCounter = 0;
+
+                // 3. Garante que todos os quadrados voltem a aparecer e fiquem parados
+                SeminimaRectangule.stop(true, true).css('visibility', 'visible');
+                ColcheiaRectangule.stop(true, true).css('visibility', 'visible');
+                SemiColcheiaRectangule.stop(true, true).css('visibility', 'visible');
+                MinimaRectangule.stop(true, true).css('visibility', 'visible');
+                
+                // Se estiver usando as funções on/off que criamos:
+                on(SeminimaRectangule);
+                on(ColcheiaRectangule);
+                on(SemiColcheiaRectangule);
+                on(MinimaRectangule);
             } else {
                 play.html('Parar');
                 play.removeClass('btn-success');
                 play.addClass('btn-danger');
                 interval = (60 * 1000) / currentBpm;
+
+                beatCounter = 0; // Começa do tempo 1
                 blink();
                 timerTick = setInterval(function () {blink()}, interval);
             }
 
             isPlaying = !isPlaying;
         });
-
-        // function blink() {
-        //     tick();
-        //     SeminimaRectangule.hide(interval / 2);
-        //     SeminimaRectangule.show(interval / 2);
-
-        //     ColcheiaRectangule.hide(interval / 4);
-        //     ColcheiaRectangule.show(interval / 4);
-        //     ColcheiaRectangule.hide(interval / 4);
-        //     ColcheiaRectangule.show(interval / 4);
-
-        //     SemiColcheiaRectangule.hide(interval / 8);
-        //     SemiColcheiaRectangule.show(interval / 8);
-        //     SemiColcheiaRectangule.hide(interval / 8);
-        //     SemiColcheiaRectangule.show(interval / 8);
-        //     SemiColcheiaRectangule.hide(interval / 8);
-        //     SemiColcheiaRectangule.show(interval / 8);
-        //     SemiColcheiaRectangule.hide(interval / 8);
-        //     SemiColcheiaRectangule.show(interval / 8);
-
-        //     MinimaRectangule.hide(interval);
-        //     MinimaRectangule.show(interval);
-
-        //     // SemiBreveRectangule.hide(interval * 2);
-        //     // SemiBreveRectangule.show(interval * 2);
-        // };
 
         // #region Funções para ajuste de controle visual (remover Reflow)
         function off(e) {
@@ -231,12 +216,16 @@
         }
         // #endregion
 
+        // Variável global para controlar os tempos musicais
+        var beatCounter = 0;
+
         // #region Resetar exibição de elementos
         function resetAll() {
             on(SeminimaRectangule);
             on(ColcheiaRectangule);
             on(SemiColcheiaRectangule);
             on(MinimaRectangule);
+            beatCounter = 0; // Reset do contador
         }
         // #endregion
 
@@ -244,9 +233,13 @@
         function blink() {
             tick();
 
+            on(SeminimaRectangule);
+            on(ColcheiaRectangule);
+            on(SemiColcheiaRectangule);
+
             // Seminima (1)
             off(SeminimaRectangule);
-            setTimeout(() => on(SeminimaRectangule), interval / 2);
+            setTimeout(() => on(SeminimaRectangule), 100); // Pisca rápido (100ms) e volta
 
             // Colcheia (2)
             off(ColcheiaRectangule);
@@ -264,15 +257,22 @@
             setTimeout(() => off(SemiColcheiaRectangule), (interval * 3) / 4);
             setTimeout(() => on(SemiColcheiaRectangule), (interval * 7) / 8);
 
-            // Mínima (1 a cada 2 tempos)
-            off(MinimaRectangule);
-            setTimeout(() => on(MinimaRectangule), interval);
+            // --- MÍNIMA (1 a cada 2 tempos) ---
+            // Ela só apaga no tempo 1. No tempo 2, ela permanece ligada.
+            if (beatCounter % 2 === 0) {
+                off(MinimaRectangule);
+                setTimeout(() => on(MinimaRectangule), 100); // Pisca no início do tempo 1
+            }
+            // No tempo impar (ex: beat 1, 3, 5...), não fazemos nada, 
+            // assim ela continua visível vinda do tempo anterior.
+
+            beatCounter++;
         }
         // #endregion
 
         function alternarFrequencia(frequencia){
             currentBpm = parseInt(frequencia);
-
+            
             if (isPlaying) {
                 clearInterval(timerTick);
                 SeminimaRectangule.stop(true, true).show();
