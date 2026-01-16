@@ -28,7 +28,7 @@ $(document).ready(function () {
       localStorage.setItem("pagina_etapa1", 1);
       // window.location.href = "../../views/selecaoEtapa/index.html";
       // Mudar para
-      window.location.href = "../../views/etapa3/index.html";
+      window.location.href = "../../views/etapa2/index.html";
       // Quando a etapa 2 for desenvolvida
     } else {
       localStorage.setItem("pagina_etapa1", parseInt(localStorage.getItem("pagina_etapa1")) + 1);
