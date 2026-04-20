@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Página Inicial :: Módulo Musicalização</title>
+
+    <!-- Arquivos CSS do Bootstrap -->
+    <link href="./assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Arquivo CSS principal -->
+    <link href="./assets/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="container page-container">
+        <div class="row">
+            <section id="conteudo">
+                <div class="container text-center">
+                    <div class="row justify-content-center p-3">
+                        <div class="col-12">
+                            <h4><strong id="titlebpm">10 BPM</strong></h4>
+                            <input type="range" class="form-range" min="1" max="200" value="10" id="bpm" />
+                            <audio id="audio" src="clap.wav"></audio>
+                            <button type="button" class="btn btn-outline-primary" id="play">Play</button>
+                        </div>
+
+                        <div class="col-12 col-lg-4 p-5 mt-4" id="blueSquare" style="background-color: blue;">
+                            <h3>SEMÍNIMA</h3>
+                        </div>
+                        <div class="col-12 col-lg-4 p-5 mt-4" id="redSquare" style="background-color: red;">
+                            <h3>COLCHEIA</h3>
+                        </div>
+                        <div class="col-12 col-lg-4 p-5 mt-4" id="greenSquare" style="background-color:green;">
+                            <h3>SEMICOLCHEIA</h3>
+                        </div>
+                        <div class="col-12 col-lg-6 p-5 mt-4" id="yellowSquare" style="background-color: yellow;">
+                            <h3>MÍNIMA</h3>
+                        </div>
+                        <div class="col-12 col-lg-6 p-5 mt-4" id="orangeSquare" style="background-color: orange;">
+                            <h3>SEMIBREVE</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="./assets/vendor/jquery.js" type="text/javascript"></script>
+
+    <script src="./assets/js/main.js" type="text/javascript"></script>
+    <script src="./assets/js/mainpage.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function () {
+            const bpm = $("#bpm");
+            const h4 = $("#titlebpm");
+            const play = $("#play");
+            const audio = document.getElementById("audio");
+
+            const SeminimaRectangule = $('#blueSquare');
+            const ColcheiaRectangule = $('#redSquare');
+            const SemiColcheiaRectangule = $('#greenSquare');
+            const MinimaRectangule = $('#yellowSquare');
+            const SemiBreveRectangule = $('#orangeSquare');
+
+            var currentBpm = 40;
+            var isPlaying = false;
+            var interval = null;
+            var timerTick = null;
+            var timerBlueSquare = null;
+
+            //var interval = ;
+
+            function HideAndShow(square) {
+                if (square.css('display') == 'none') {
+                    square.show();
+                } else {
+                    square.hide();
+                }
+            }
+
+            function tick() {
+                audio.currentTime = 0;
+                audio.play();
+            }
+
+            $(bpm).change(function (e) {
+                e.preventDefault();
+                h4.html(this.value + ' bpm');
+                currentBpm = parseInt(this.value);
+                if (isPlaying) {
+                    clearInterval(timerTick);
+                    SeminimaRectangule.stop(true, true).fadeIn();
+                    ColcheiaRectangule.stop(true, true).fadeIn();
+                    SemiColcheiaRectangule.stop(true, true).fadeIn();
+                    MinimaRectangule.stop(true, true).fadeIn();
+                    SemiBreveRectangule.stop(true, true).fadeIn();
+                    interval = (60 * 1000) / currentBpm;
+                    timerTick = setInterval(function () {
+                        tick();
+                        SeminimaRectangule.fadeOut(interval / 2);
+                        SeminimaRectangule.fadeIn(interval / 2);
+
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
+
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+
+                        MinimaRectangule.fadeOut(interval);
+                        MinimaRectangule.fadeIn(interval);
+
+                        SemiBreveRectangule.fadeOut(interval * 2);
+                        SemiBreveRectangule.fadeIn(interval * 2);
+
+                    }, interval);
+
+                }
+            });
+
+            $(play).click(function (e) {
+                e.preventDefault();
+                if (isPlaying) {
+                    play.html('Play');
+                    clearInterval(timerTick);
+                    SeminimaRectangule.stop(true, true).fadeIn();
+                    ColcheiaRectangule.stop(true, true).fadeIn();
+                    SemiColcheiaRectangule.stop(true, true).fadeIn();
+                    MinimaRectangule.stop(true, true).fadeIn();
+                    SemiBreveRectangule.stop(true, true).fadeIn();
+                } else {
+                    play.html('Stop')
+                    interval = (60 * 1000) / currentBpm;
+                    timerTick = setInterval(function () {
+                        tick();
+                        SeminimaRectangule.fadeOut(interval / 2);
+                        SeminimaRectangule.fadeIn(interval / 2);
+
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
+                        ColcheiaRectangule.fadeOut(interval / 4);
+                        ColcheiaRectangule.fadeIn(interval / 4);
+
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+                        SemiColcheiaRectangule.fadeOut(interval / 8);
+                        SemiColcheiaRectangule.fadeIn(interval / 8);
+
+                        MinimaRectangule.fadeOut(interval);
+                        MinimaRectangule.fadeIn(interval);
+
+                        SemiBreveRectangule.fadeOut(interval * 2);
+                        SemiBreveRectangule.fadeIn(interval * 2);
+
+                    }, interval);
+                }
+
+                isPlaying = !isPlaying;
+            });
+        });
+
+    </script>
+
+    <!-- Arquivos JS do Bootstrap -->
+    <script src="./assets/vendor/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="./assets/vendor/bootstrap/js/popper.min.js" type="text/javascript"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,300 @@
+<div class="row p-3 mb-4 bg-body-tertiary rounded-3" style="min-height: 400px;">
+    <div class="text-center">
+        <p class="fs-4">Por fim, neste exercício teremos a demonstração de um Metrônomo. Configure
+            a duração dos intervalos de tempo do metrônomo, clique no Iniciar e se divirta.
+        </p>
+        <br>
+    </div>
+    <div class="container text-center">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-6">
+                <div id="orangeSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #820742; color: white;"><img src="../../assets/img/minima.png" width="32" height="40"
+                    alt="Símbolo Mínima" /></div>
+            </div>
+            <div class="col-12 col-md-6 py-4">
+                <div id="blueSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #17867C; color: white;"><img src="../../assets/img/seminima.png" width="32" height="40"
+                    alt="Símbolo Seminima" /></div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div id="redSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #E6972A; color: white;"><img src="../../assets/img/colcheia.png" width="32" height="40"
+                    alt="Símbolo Colcheia" /></div>
+            </div>
+            <div class="col-12 col-md-6 py-4">
+                <div id="greenSquare" type="button" class="btn w-100"
+                    style="min-height: 55px; background-color: #B9C303; color: white;"><img src="../../assets/img/semicolcheia.png" width="32" height="40"
+                    alt="Símbolo Semicolcheia" /></div>
+            </div>
+        </div>
+    </div>
+    <h4 class="pt-4">Defina a frequência dos intervalos clicando nos valores pré definidos abaixo, em batidas por minuto (BPM). Em seguida, basta clicar em Iniciar:</h4>
+    <div class="container text-center">
+        <div class="row justify-content-center p-3">
+            <div class="col-12">
+                <!-- <h4><strong id="titlebpm">70 BPM</strong></h4>
+                <input type="range" class="form-range" min="40" max="130" value="70" id="bpm" /> -->
+                
+            </div>
+            <div class="col-12 col-md-4 py-4">
+                <button id="firstButton" type="button" class="btn btn-outline-primary w-100" style="min-height: 55px; font-size: 22px;" data-selected="0">
+                    30 BPM
+                </button>
+            </div>
+            <div class="col-12 col-md-4 py-4">
+                <button id="secondButton" type="button" class="btn btn-outline-primary w-100" style="min-height: 55px; font-size: 22px;" data-selected="0">
+                    70 BPM
+                </button>
+            </div>
+            <div class="col-12 col-md-4 py-4">
+                <button id="thirdButton" type="button" class="btn btn-outline-primary w-100" style="min-height: 55px; font-size: 22px;" data-selected="0">
+                    130 BPM
+                </button>
+            </div>
+            <audio id="audio" src="../../clap.wav"></audio>
+            <div class="pt-3 col-12">
+                <button type="button" class="btn btn-lg btn-success" id="play">Iniciar</button>
+            </div>
+        </div>
+    </div>
+    <p class="pt-3 fs-4" style="text-align: start !important;"><u>Legenda de Cores</u></p>
+    <div class="table-responsive">
+        <table class="table">
+            <tbody>
+                <tr style="width: 50%;">
+                    <td class="text-center" style="background-color: #820742;"><img src="../../assets/img/minima.png" width="32" height="32"
+                        alt="Símbolo Mínima" /></td>
+                    <td style="width: 45%;">Mínima</td>
+                    <td class="text-center" style="background-color: #17867C;"><img src="../../assets/img/seminima.png" width="32" height="32"
+                        alt="Símbolo Seminima" /></td>
+                    <td style="width: 45%;">Semínima</td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="background-color: #E6972A;"><img src="../../assets/img/colcheia.png" width="32" height="32"
+                        alt="Símbolo Colcheia" /></td>
+                    <td>Colcheia</td>
+                    <td class="text-center" style="background-color: #B9C303;"><img src="../../assets/img/semicolcheia.png" width="32" height="32"
+                        alt="Símbolo Semicolcheia" /></td>
+                    <td>Semicolcheia</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        const bpm = $("#bpm");
+        const h4 = $("#titlebpm");
+        const play = $("#play");
+        const audio = document.getElementById("audio");
+
+        const SeminimaRectangule = $('#blueSquare');
+        const ColcheiaRectangule = $('#redSquare');
+        const SemiColcheiaRectangule = $('#greenSquare');
+        const MinimaRectangule = $('#orangeSquare');
+        // const SemiBreveRectangule = $('#yellowSquare');
+
+        var currentBpm = 40;
+        var isPlaying = false;
+        var interval = null;
+        var timerTick = null;
+        var timerBlueSquare = null;
+
+        function HideAndShow(square) {
+            if (square.css('display') == 'none') {
+                square.show();
+            } else {
+                square.hide();
+            }
+        }
+
+        function tick() {
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        $("#firstButton").click( function(e) {
+            if (isPlaying){
+                $(play).click();
+            }
+
+            if($("#firstButton").attr('data-selected') == "0") {
+                selecionarBotao("firstButton");
+                removerSelecionar("secondButton");
+                removerSelecionar("thirdButton");
+            }
+            else
+                removerSelecionar("firstButton");
+        });
+
+        $("#secondButton").click( function(e) {
+            if (isPlaying){
+                $(play).click();
+            }
+
+            if($("#secondButton").attr('data-selected') == "0"){
+                selecionarBotao("secondButton");
+                removerSelecionar("firstButton");
+                removerSelecionar("thirdButton");
+            } 
+            else
+                removerSelecionar("secondButton");
+        });
+
+        $("#thirdButton").click( function(e) {
+            if (isPlaying){
+                $(play).click();
+            }
+
+            if($("#thirdButton").attr('data-selected') == "0") {
+                selecionarBotao("thirdButton");
+                removerSelecionar("firstButton");
+                removerSelecionar("secondButton");
+            }
+            else
+                removerSelecionar("thirdButton");
+        });
+
+        $(play).click(function (e) {
+            if ($("#thirdButton").attr('data-selected') == "1"){
+                removerSelecionar("secondButton");
+                removerSelecionar("firstButton");
+                alternarFrequencia(130);
+
+            } else if ($("#secondButton").attr('data-selected') == "1") {
+                removerSelecionar("firstButton");
+                alternarFrequencia(70);
+
+            } else {                
+                selecionarBotao("firstButton");
+                alternarFrequencia(30);
+            }
+
+            e.preventDefault();
+            if (isPlaying) {
+                play.html('Iniciar');
+                play.removeClass('btn-danger');
+                play.addClass('btn-success');
+                clearInterval(timerTick);
+
+                beatCounter = 0;
+
+                // 3. Garante que todos os quadrados voltem a aparecer e fiquem parados
+                SeminimaRectangule.stop(true, true).css('visibility', 'visible');
+                ColcheiaRectangule.stop(true, true).css('visibility', 'visible');
+                SemiColcheiaRectangule.stop(true, true).css('visibility', 'visible');
+                MinimaRectangule.stop(true, true).css('visibility', 'visible');
+                
+                // Se estiver usando as funções on/off que criamos:
+                on(SeminimaRectangule);
+                on(ColcheiaRectangule);
+                on(SemiColcheiaRectangule);
+                on(MinimaRectangule);
+            } else {
+                play.html('Parar');
+                play.removeClass('btn-success');
+                play.addClass('btn-danger');
+                interval = (60 * 1000) / currentBpm;
+
+                beatCounter = 0; // Começa do tempo 1
+                blink();
+                timerTick = setInterval(function () {blink()}, interval);
+            }
+
+            isPlaying = !isPlaying;
+        });
+
+        // #region Funções para ajuste de controle visual (remover Reflow)
+        function off(e) {
+            e.css('visibility', 'hidden');
+        }
+
+        function on(e) {
+            e.css('visibility', 'visible');
+        }
+        // #endregion
+
+        // Variável global para controlar os tempos musicais
+        var beatCounter = 0;
+
+        // #region Resetar exibição de elementos
+        function resetAll() {
+            on(SeminimaRectangule);
+            on(ColcheiaRectangule);
+            on(SemiColcheiaRectangule);
+            on(MinimaRectangule);
+            beatCounter = 0; // Reset do contador
+        }
+        // #endregion
+
+        // #region Blink sem efeito de transição
+        function blink() {
+            tick();
+
+            on(SeminimaRectangule);
+            on(ColcheiaRectangule);
+            on(SemiColcheiaRectangule);
+
+            // Seminima (1)
+            off(SeminimaRectangule);
+            setTimeout(() => on(SeminimaRectangule), 100); // Pisca rápido (100ms) e volta
+
+            // Colcheia (2)
+            off(ColcheiaRectangule);
+            setTimeout(() => on(ColcheiaRectangule), interval / 4);
+            setTimeout(() => off(ColcheiaRectangule), interval / 2);
+            setTimeout(() => on(ColcheiaRectangule), (interval * 3) / 4);
+
+            // Semicolcheia (4)
+            off(SemiColcheiaRectangule);
+            setTimeout(() => on(SemiColcheiaRectangule), interval / 8);
+            setTimeout(() => off(SemiColcheiaRectangule), interval / 4);
+            setTimeout(() => on(SemiColcheiaRectangule), (interval * 3) / 8);
+            setTimeout(() => off(SemiColcheiaRectangule), interval / 2);
+            setTimeout(() => on(SemiColcheiaRectangule), (interval * 5) / 8);
+            setTimeout(() => off(SemiColcheiaRectangule), (interval * 3) / 4);
+            setTimeout(() => on(SemiColcheiaRectangule), (interval * 7) / 8);
+
+            // --- MÍNIMA (1 a cada 2 tempos) ---
+            // Ela só apaga no tempo 1. No tempo 2, ela permanece ligada.
+            if (beatCounter % 2 === 0) {
+                off(MinimaRectangule);
+                setTimeout(() => on(MinimaRectangule), 100); // Pisca no início do tempo 1
+            }
+            // No tempo impar (ex: beat 1, 3, 5...), não fazemos nada, 
+            // assim ela continua visível vinda do tempo anterior.
+
+            beatCounter++;
+        }
+        // #endregion
+
+        function alternarFrequencia(frequencia){
+            currentBpm = parseInt(frequencia);
+            
+            if (isPlaying) {
+                clearInterval(timerTick);
+                SeminimaRectangule.stop(true, true).show();
+                ColcheiaRectangule.stop(true, true).show();
+                SemiColcheiaRectangule.stop(true, true).show();
+                MinimaRectangule.stop(true, true).show();
+                // SemiBreveRectangule.stop(true, true).show();
+                interval = (60 * 1000) / currentBpm;
+                timerTick = setInterval(function () {blink()}, interval);
+            }
+        };
+
+        function selecionarBotao(nomeBotao) {
+            $(`#${nomeBotao}`).removeClass("btn-outline-primary");
+            $(`#${nomeBotao}`).addClass("btn-primary");
+            $(`#${nomeBotao}`).attr('data-selected','1');
+        }
+
+        function removerSelecionar(nomeBotao) {
+            $(`#${nomeBotao}`).removeClass("btn-primary");
+            $(`#${nomeBotao}`).addClass("btn-outline-primary");
+            $(`#${nomeBotao}`).attr('data-selected','0');
+        }
+    });
+</script>
