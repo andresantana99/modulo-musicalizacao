@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { etapas } from '@/content/etapas.config';
+import { getPagina, resolverBase } from '@/content/paginas';
 
 export default function Etapa() {
   const { numero, pagina } = useParams<{ numero: string; pagina?: string }>();
@@ -39,11 +40,26 @@ export default function Etapa() {
         </p>
       </header>
 
-      <article className="p-3 border rounded mb-3" aria-live="polite">
-        <p>
-          <em>Conteúdo da página {paginaNum} em migração (ver arquivo original em <code>legacy/views/etapa{etapa.numero}/pagina_{paginaNum}_etapa{etapa.numero}.html</code>).</em>
-        </p>
-      </article>
+      {(() => {
+        const conteudo = getPagina(etapa.numero, paginaNum);
+        if (!conteudo) {
+          return (
+            <article className="p-3 border rounded mb-3" aria-live="polite">
+              <p>
+                <em>Conteúdo indisponível para a página {paginaNum}.</em>
+              </p>
+            </article>
+          );
+        }
+        const html = resolverBase(conteudo.html, import.meta.env.BASE_URL);
+        return (
+          <article
+            className="mb-3"
+            aria-live="polite"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+        );
+      })()}
 
       <nav className="d-flex justify-content-between" aria-label="Navegação entre páginas">
         {paginaAnterior ? (
