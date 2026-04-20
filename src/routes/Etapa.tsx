@@ -77,8 +77,8 @@ export default function Etapa() {
             Próxima →
           </Link>
         ) : (
-          <Link to="/etapas" className="btn btn-success">
-            Concluir etapa ✓
+          <Link to={`/etapa/${etapa.numero}/atividades`} className="btn btn-success">
+            Ir para atividades →
           </Link>
         )}
       </nav>
