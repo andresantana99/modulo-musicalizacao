@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import MetronomoVisual from '@/components/metronomo/MetronomoVisual';
 
 export default function Metronomo() {
@@ -10,6 +11,11 @@ export default function Metronomo() {
         </p>
       </header>
       <MetronomoVisual />
+      <nav className="mt-4 d-flex justify-content-center">
+        <Link to="/etapas" className="btn btn-outline-secondary">
+          ← Voltar ao menu de etapas
+        </Link>
+      </nav>
     </section>
   );
 }

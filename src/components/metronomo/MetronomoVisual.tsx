@@ -7,11 +7,11 @@ type Figura = {
 };
 
 const FIGURAS: Figura[] = [
-  { nome: 'Semínima', cor: '#17867C', beatsPorCiclo: 1 },
-  { nome: 'Colcheia', cor: '#E6972A', beatsPorCiclo: 0.5 },
   { nome: 'Semicolcheia', cor: '#B9C303', beatsPorCiclo: 0.25 },
-  { nome: 'Mínima', cor: '#820742', beatsPorCiclo: 2 },
-  { nome: 'Semibreve', cor: '#c2410c', beatsPorCiclo: 4 },
+  { nome: 'Colcheia',     cor: '#E6972A', beatsPorCiclo: 0.5  },
+  { nome: 'Semínima',     cor: '#17867C', beatsPorCiclo: 1    },
+  { nome: 'Mínima',       cor: '#820742', beatsPorCiclo: 2    },
+  { nome: 'Semibreve',    cor: '#c2410c', beatsPorCiclo: 4    },
 ];
 
 const BPM_MIN = 20;
