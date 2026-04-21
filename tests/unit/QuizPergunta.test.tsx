@@ -25,7 +25,7 @@ describe('QuizPergunta', () => {
   it('reporta acerto quando opção correta é escolhida', () => {
     const onResponder = vi.fn();
     render(<QuizPergunta atividade={atividade} onResponder={onResponder} />);
-    fireEvent.click(screen.getByLabelText('4'));
+    fireEvent.click(screen.getByLabelText(/4/));
     fireEvent.click(screen.getByRole('button', { name: /responder/i }));
     expect(onResponder).toHaveBeenCalledWith('b', true);
     expect(screen.getByRole('status')).toHaveTextContent(/correta/i);
@@ -34,7 +34,7 @@ describe('QuizPergunta', () => {
   it('reporta erro quando opção incorreta é escolhida e exibe explicação', () => {
     const onResponder = vi.fn();
     render(<QuizPergunta atividade={atividade} onResponder={onResponder} />);
-    fireEvent.click(screen.getByLabelText('3'));
+    fireEvent.click(screen.getByLabelText(/3/));
     fireEvent.click(screen.getByRole('button', { name: /responder/i }));
     expect(onResponder).toHaveBeenCalledWith('a', false);
     expect(screen.getByRole('status')).toHaveTextContent(/incorreta/i);

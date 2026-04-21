@@ -64,19 +64,6 @@ const atividadesPorEtapa: Record<number, Atividade[]> = {
       correta: 'b',
     },
   ],
-  4: [
-    {
-      id: 'e4-q1',
-      tipo: 'multipla-escolha',
-      enunciado: 'Qual elemento da bateria costuma marcar o tempo forte (1 e 3) em um ritmo binário simples?',
-      opcoes: [
-        { id: 'a', texto: 'Chimbal' },
-        { id: 'b', texto: 'Bumbo' },
-        { id: 'c', texto: 'Caixa' },
-      ],
-      correta: 'b',
-    },
-  ],
 };
 
 export function getAtividades(etapa: number): Atividade[] {

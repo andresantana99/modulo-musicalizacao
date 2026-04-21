@@ -1,15 +1,5 @@
-:root {
-  --cor-etapa-1: #e6972a;
-  --cor-etapa-2: #2d9cdb;
-  --cor-etapa-3: #27ae60;
-  --cor-etapa-4: #9b51e0;
-  --cor-etapa-5: #eb5757;
-}
-
-body {
-  font-family: 'Shantell Sans', 'Segoe UI', system-ui, sans-serif;
-  min-height: 100vh;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import './theme.css';
 
 .page-container {
   min-height: 100vh;
@@ -24,7 +14,16 @@ main#conteudo {
 .footer {
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid var(--bs-border-color);
+  border-top: 1px solid var(--border-soft);
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Foco visível acessível */
+:focus-visible {
+  outline: 3px solid rgba(23, 134, 124, 0.45);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {
