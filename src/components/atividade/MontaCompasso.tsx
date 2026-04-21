@@ -8,10 +8,10 @@ type Figura = {
 };
 
 const FIGURAS: Figura[] = [
-  { id: 'seminima', nome: 'Semínima', cor: '#17867C', duracao: 1 },
-  { id: 'colcheia', nome: 'Colcheia', cor: '#E6972A', duracao: 0.5 },
   { id: 'semicolcheia', nome: 'Semicolcheia', cor: '#B9C303', duracao: 0.25 },
-  { id: 'minima', nome: 'Mínima', cor: '#820742', duracao: 2 },
+  { id: 'colcheia',     nome: 'Colcheia',     cor: '#E6972A', duracao: 0.5  },
+  { id: 'seminima',     nome: 'Semínima',     cor: '#17867C', duracao: 1    },
+  { id: 'minima',       nome: 'Mínima',       cor: '#820742', duracao: 2    },
 ];
 
 const COMPASSO_TEMPOS = 4;
@@ -105,11 +105,10 @@ export default function MontaCompasso() {
     const beatDur = 60 / BPM;
     const t0 = ctx.currentTime + 0.1;
     agenda.forEach((n) => {
-      tocarClick(t0 + n.inicio * beatDur);
-      const handleShow = window.setTimeout(
-        () => setIndiceAtivo(n.idx),
-        n.inicio * beatDur * 1000 + 100,
-      );
+      const scheduledAt = t0 + n.inicio * beatDur;
+      tocarClick(scheduledAt);
+      const delayMs = (scheduledAt - ctx.currentTime) * 1000;
+      const handleShow = window.setTimeout(() => setIndiceAtivo(n.idx), delayMs);
       timeoutsRef.current.push(handleShow);
     });
     const fim = window.setTimeout(
@@ -146,10 +145,21 @@ export default function MontaCompasso() {
   const t1 = totalDuracao(compasso1);
   const t2 = totalDuracao(compasso2);
   const cheio1 = t1 >= COMPASSO_TEMPOS;
-  const cheio2 = t2 >= COMPASSO_TEMPOS;
 
   return (
     <div className="monta-compasso">
+      <div className="monta-compasso-intro">
+        <p>
+          Chegou a hora de colocar em prática! Utilize as figuras rítmicas que você aprendeu para
+          montar <strong>dois compassos no tempo de 4/4</strong> (cada compasso suporta até 4
+          tempos).
+        </p>
+        <p className="mb-0">
+          Clique nas figuras abaixo para adicioná-las à sequência e, quando estiver pronto, clique
+          em <strong>Tocar sequência</strong> para ouvir o ritmo que você criou.
+        </p>
+      </div>
+
       <Compasso
         titulo="1º Compasso"
         notas={compasso1}
