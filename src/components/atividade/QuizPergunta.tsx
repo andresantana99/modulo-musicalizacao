@@ -7,6 +7,8 @@ type Props = {
   onResponder: (opcaoId: string, acertou: boolean) => void;
 };
 
+const LETRAS = ['A', 'B', 'C', 'D', 'E'];
+
 export function QuizPergunta({ atividade, respostaAnterior, onResponder }: Props) {
   const [escolha, setEscolha] = useState<string | null>(respostaAnterior ?? null);
   const [enviada, setEnviada] = useState(Boolean(respostaAnterior));
@@ -21,37 +23,39 @@ export function QuizPergunta({ atividade, respostaAnterior, onResponder }: Props
   const acertou = enviada && escolha === atividade.correta;
 
   return (
-    <fieldset className="border rounded p-3 mb-3">
-      <legend className="fs-5">{atividade.enunciado}</legend>
-      <div role="radiogroup" aria-labelledby={groupId}>
-        {atividade.opcoes.map((op) => {
-          const id = `${atividade.id}-${op.id}`;
-          const marcadaCerta = enviada && op.id === atividade.correta;
-          const marcadaErrada = enviada && op.id === escolha && op.id !== atividade.correta;
-          return (
-            <div key={op.id} className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                id={id}
-                name={atividade.id}
-                value={op.id}
-                checked={escolha === op.id}
-                onChange={() => setEscolha(op.id)}
-                disabled={enviada}
-              />
-              <label
-                className={`form-check-label ${marcadaCerta ? 'text-success fw-bold' : ''} ${marcadaErrada ? 'text-danger' : ''}`}
-                htmlFor={id}
-              >
-                {op.texto}
-                {marcadaCerta && ' ✓'}
-                {marcadaErrada && ' ✗'}
-              </label>
-            </div>
-          );
-        })}
-      </div>
+    <div className="quiz-card">
+      <fieldset role="radiogroup" id={groupId}>
+        <legend>{atividade.enunciado}</legend>
+        <div className="quiz-opcoes">
+          {atividade.opcoes.map((op, i) => {
+            const id = `${atividade.id}-${op.id}`;
+            const marcadaCerta = enviada && op.id === atividade.correta;
+            const marcadaErrada = enviada && op.id === escolha && op.id !== atividade.correta;
+            const classe = marcadaCerta ? 'correta' : marcadaErrada ? 'errada' : enviada ? 'desabilitada' : '';
+            const marca = marcadaCerta ? '✓' : marcadaErrada ? '✗' : null;
+            return (
+              <div key={op.id}>
+                <input
+                  className="quiz-opcao-input"
+                  type="radio"
+                  id={id}
+                  name={atividade.id}
+                  value={op.id}
+                  checked={escolha === op.id}
+                  onChange={() => !enviada && setEscolha(op.id)}
+                  disabled={enviada}
+                  aria-label={`${LETRAS[i]} - ${op.texto}`}
+                />
+                <label className={`quiz-opcao-label ${classe}`} htmlFor={id}>
+                  <span className="quiz-opcao-bolha">{LETRAS[i]}</span>
+                  <span>{op.texto}</span>
+                  {marca && <span className="quiz-opcao-marca">{marca}</span>}
+                </label>
+              </div>
+            );
+          })}
+        </div>
+      </fieldset>
 
       {!enviada && (
         <button
@@ -66,14 +70,17 @@ export function QuizPergunta({ atividade, respostaAnterior, onResponder }: Props
 
       {enviada && (
         <div
-          className={`alert mt-3 ${acertou ? 'alert-success' : 'alert-warning'}`}
+          className={`quiz-feedback mt-3 ${acertou ? 'quiz-feedback-ok' : 'quiz-feedback-erro'}`}
           role="status"
           aria-live="polite"
         >
-          {acertou ? 'Resposta correta!' : 'Resposta incorreta.'}
-          {atividade.explicacao && <p className="mb-0 mt-1 small">{atividade.explicacao}</p>}
+          <span className="quiz-feedback-icone">{acertou ? '🎉' : '💡'}</span>
+          <div>
+            <strong>{acertou ? 'Resposta correta!' : 'Resposta incorreta.'}</strong>
+            {atividade.explicacao && <p className="mb-0 mt-1 small">{atividade.explicacao}</p>}
+          </div>
         </div>
       )}
-    </fieldset>
+    </div>
   );
 }
