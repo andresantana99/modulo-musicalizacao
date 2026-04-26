@@ -29,6 +29,7 @@ type TelaFinalProps = {
 function TelaFinal({ etapa, atividades, acertos, pontos, estrelas, onResetar }: TelaFinalProps) {
   const erros = atividades.length - acertos;
   const pct = Math.round((acertos / atividades.length) * 100);
+  const proximaEtapa = etapas.find((e) => e.numero === etapa.numero + 1);
 
   const mensagens: Record<0 | 1 | 2 | 3, string> = {
     0: 'Não desanime! Reveja o conteúdo e tente novamente.',
@@ -85,9 +86,24 @@ function TelaFinal({ etapa, atividades, acertos, pontos, estrelas, onResetar }: 
           <button type="button" className="btn btn-outline-secondary" onClick={onResetar}>
             ↻ Tentar novamente
           </button>
-          <Link to="/etapas" className="btn btn-success btn-lg">
-            Concluir etapa →
-          </Link>
+          {proximaEtapa ? (
+            <>
+              <Link to="/etapas" className="btn btn-outline-primary">
+                Ver todas as etapas
+              </Link>
+              <Link
+                to={`/etapa/${proximaEtapa.numero}/pagina/1`}
+                className="btn btn-success btn-lg"
+                style={{ ['--etapa-cor' as string]: proximaEtapa.cor } as React.CSSProperties}
+              >
+                Próxima etapa →
+              </Link>
+            </>
+          ) : (
+            <Link to="/etapas" className="btn btn-success btn-lg">
+              Concluir etapa →
+            </Link>
+          )}
         </div>
       </div>
     </section>
@@ -121,6 +137,7 @@ export default function Atividades() {
   }
 
   if (atividades.length === 0) {
+    const proximaEtapaSemAtividade = etapas.find((e) => e.numero === etapa.numero + 1);
     return (
       <section className="container p-3">
         <div
@@ -139,11 +156,30 @@ export default function Atividades() {
             </p>
           </div>
           <div className="resultado-acoes mt-3">
-            <Link to={`/etapa/${etapa.numero}`} className="btn btn-outline-secondary">
-              ← Voltar ao conteúdo
-            </Link>
-            <Link to="/etapas" className="btn btn-success btn-lg">
-              Concluir etapa →
+            {proximaEtapaSemAtividade ? (
+              <>
+                <Link to="/etapas" className="btn btn-outline-primary">
+                  Ver todas as etapas
+                </Link>
+                <Link
+                  to={`/etapa/${proximaEtapaSemAtividade.numero}/pagina/1`}
+                  className="btn btn-success btn-lg"
+                >
+                  Próxima etapa →
+                </Link>
+              </>
+            ) : (
+              <Link to="/etapas" className="btn btn-success btn-lg">
+                Concluir etapa →
+              </Link>
+            )}
+          </div>
+          <div className="text-center mt-3">
+            <Link
+              to={`/etapa/${etapa.numero}/pagina/${etapa.totalPaginas}`}
+              className="text-body-secondary small"
+            >
+              ← Rever conteúdo da etapa
             </Link>
           </div>
         </div>
