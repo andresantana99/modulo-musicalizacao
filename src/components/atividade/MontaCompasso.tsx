@@ -31,7 +31,10 @@ export default function MontaCompasso() {
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const clickBufferRef = useRef<AudioBuffer | null>(null);
-  const timeoutsRef = useRef<number[]>([]);
+  // Rastreia cada AudioBufferSourceNode agendado para poder cancelá-los com .stop()
+  const sourcesRef = useRef<AudioBufferSourceNode[]>([]);
+  // RAF para sincronizar visual com ctx.currentTime (mesmo clock do áudio)
+  const rafRef = useRef<number | null>(null);
 
   const garantirAudio = useCallback(async () => {
     if (!audioCtxRef.current) {
@@ -48,7 +51,7 @@ export default function MontaCompasso() {
         const arr = await res.arrayBuffer();
         clickBufferRef.current = await ctx.decodeAudioData(arr);
       } catch {
-        // fallback silencioso
+        // fallback silencioso ao oscillator
       }
     }
     return ctx;
@@ -62,6 +65,7 @@ export default function MontaCompasso() {
       src.buffer = clickBufferRef.current;
       src.connect(ctx.destination);
       src.start(quando);
+      sourcesRef.current.push(src); // rastreia para poder parar depois
     } else {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -75,8 +79,16 @@ export default function MontaCompasso() {
   }, []);
 
   const parar = useCallback(() => {
-    timeoutsRef.current.forEach((t) => clearTimeout(t));
-    timeoutsRef.current = [];
+    // Cancela o loop visual
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    // Para cada source agendado via Web Audio API — clearTimeout não os afeta
+    sourcesRef.current.forEach((src) => {
+      try { src.stop(0); } catch { /* já terminou */ }
+    });
+    sourcesRef.current = [];
     setTocando(false);
     setIndiceAtivo(null);
   }, []);
@@ -87,40 +99,53 @@ export default function MontaCompasso() {
       return;
     }
     if (compasso1.length + compasso2.length === 0) return;
+
     const ctx = await garantirAudio();
     setTocando(true);
 
     const notas = [...compasso1, ...compasso2].map((n, idx) => ({
       figura: n.figura,
-      inicio: 0,
       idx,
     }));
     let offset = 0;
     const agenda = notas.map((n) => {
-      const tempoInicio = offset;
+      const inicio = offset;
       offset += n.figura.duracao;
-      return { ...n, inicio: tempoInicio };
+      return { ...n, inicio };
     });
 
     const beatDur = 60 / BPM;
-    const t0 = ctx.currentTime + 0.1;
-    agenda.forEach((n) => {
-      const scheduledAt = t0 + n.inicio * beatDur;
-      tocarClick(scheduledAt);
-      const delayMs = (scheduledAt - ctx.currentTime) * 1000;
-      const handleShow = window.setTimeout(() => setIndiceAtivo(n.idx), delayMs);
-      timeoutsRef.current.push(handleShow);
-    });
-    const fim = window.setTimeout(
-      () => parar(),
-      (offset * beatDur + 0.3) * 1000,
-    );
-    timeoutsRef.current.push(fim);
+    // Lead-in de 250ms para estabilização do hardware de áudio (especialmente na 1ª execução)
+    const t0 = ctx.currentTime + 0.25;
+    const tFim = t0 + offset * beatDur;
+
+    // Agenda todo o áudio de uma vez
+    agenda.forEach((n) => tocarClick(t0 + n.inicio * beatDur));
+
+    // Visual sincronizado via RAF usando o mesmo ctx.currentTime do áudio
+    const tick = () => {
+      const agora = ctx.currentTime;
+
+      // Última nota cujo início já passou
+      let ativo: number | null = null;
+      for (const n of agenda) {
+        if (agora >= t0 + n.inicio * beatDur) ativo = n.idx;
+      }
+      setIndiceAtivo(ativo);
+
+      if (agora < tFim + 0.15) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        parar();
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
   }, [tocando, compasso1, compasso2, garantirAudio, tocarClick, parar]);
 
   useEffect(() => {
     return () => {
-      timeoutsRef.current.forEach((t) => clearTimeout(t));
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      sourcesRef.current.forEach((src) => { try { src.stop(0); } catch {} });
       audioCtxRef.current?.close();
     };
   }, []);
@@ -210,7 +235,7 @@ export default function MontaCompasso() {
           type="button"
           className="btn btn-lg btn-outline-secondary"
           onClick={limpar}
-          disabled={totalGeral === 0}
+          disabled={totalGeral === 0 || tocando}
         >
           ↻ Limpar
         </button>
@@ -261,10 +286,7 @@ function Compasso({ titulo, notas, preenchido, indiceAtivoGlobal, indiceInicial 
         )}
       </div>
       <div className="progress mt-1" style={{ height: 4 }} aria-hidden="true">
-        <div
-          className="progress-bar bg-success"
-          style={{ width: `${porcentagem}%` }}
-        />
+        <div className="progress-bar bg-success" style={{ width: `${porcentagem}%` }} />
       </div>
     </div>
   );
