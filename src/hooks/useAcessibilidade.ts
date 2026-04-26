@@ -13,6 +13,7 @@ export default function useAcessibilidade() {
   }, [tema]);
 
   useEffect(() => {
+    document.documentElement.style.setProperty('--zoom', String(zoom));
     document.body.style.setProperty('zoom', `${zoom}%`);
   }, [zoom]);
 
