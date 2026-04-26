@@ -156,6 +156,12 @@ export default function Atividades() {
             </p>
           </div>
           <div className="resultado-acoes mt-3">
+            <Link
+              to={`/etapa/${etapa.numero}/pagina/1`}
+              className="btn btn-outline-secondary"
+            >
+              ← Voltar ao conteúdo
+            </Link>
             {proximaEtapaSemAtividade ? (
               <>
                 <Link to="/etapas" className="btn btn-outline-primary">
@@ -173,14 +179,6 @@ export default function Atividades() {
                 Concluir etapa →
               </Link>
             )}
-          </div>
-          <div className="text-center mt-3">
-            <Link
-              to={`/etapa/${etapa.numero}/pagina/${etapa.totalPaginas}`}
-              className="text-body-secondary small"
-            >
-              ← Rever conteúdo da etapa
-            </Link>
           </div>
         </div>
       </section>
