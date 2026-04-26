@@ -81,25 +81,29 @@ export default function Etapa() {
       )}
 
       <nav className="etapa-nav" aria-label="Navegação entre páginas">
-        {paginaAnterior ? (
-          <Link to={`/etapa/${etapa.numero}/pagina/${paginaAnterior}`} className="btn btn-secondary">
-            ← Anterior
-          </Link>
-        ) : (
-          <Link to="/etapas" className="btn btn-outline-secondary">
-            ← Sair da etapa
-          </Link>
-        )}
+        <div className="etapa-nav-inner">
+          {paginaAnterior ? (
+            <Link to={`/etapa/${etapa.numero}/pagina/${paginaAnterior}`} className="btn btn-secondary">
+              ← Anterior
+            </Link>
+          ) : (
+            <Link to="/etapas" className="btn btn-outline-secondary">
+              ← Sair da etapa
+            </Link>
+          )}
 
-        {proximaPagina ? (
-          <Link to={`/etapa/${etapa.numero}/pagina/${proximaPagina}`} className="btn btn-primary">
-            Próxima →
-          </Link>
-        ) : (
-          <Link to={`/etapa/${etapa.numero}/atividades`} className="btn btn-success">
-            Ir para atividades →
-          </Link>
-        )}
+          <span className="etapa-nav-copy">© UFPA, {new Date().getFullYear()}</span>
+
+          {proximaPagina ? (
+            <Link to={`/etapa/${etapa.numero}/pagina/${proximaPagina}`} className="btn btn-primary">
+              Próxima →
+            </Link>
+          ) : (
+            <Link to={`/etapa/${etapa.numero}/atividades`} className="btn btn-success">
+              Ir para atividades →
+            </Link>
+          )}
+        </div>
       </nav>
     </section>
   );
