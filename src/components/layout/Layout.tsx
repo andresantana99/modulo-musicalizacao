@@ -12,8 +12,12 @@ export default function Layout() {
 
   // React Router não restaura scroll em mudança de rota — no celular as telas
   // pareciam abrir "no meio". Resetar para o topo a cada navegação.
+  // requestAnimationFrame garante que o scroll só acontece após o paint —
+  // sem isso, mudança interna de estado em telas com aria-live podia disparar
+  // recálculo de scroll no meio da rolagem.
   useEffect(() => {
-    window.scrollTo(0, 0);
+    const id = requestAnimationFrame(() => window.scrollTo(0, 0));
+    return () => cancelAnimationFrame(id);
   }, [pathname]);
 
   return (

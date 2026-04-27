@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import { useEffect, useRef, type ComponentType } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { etapas } from '@/content/etapas.config';
 import { getPagina, resolverBase } from '@/content/paginas';
@@ -15,6 +15,18 @@ export default function Etapa() {
   const etapaNum = Number(numero);
   const paginaNum = Number(pagina ?? '1');
   const etapa = etapas.find((e) => e.numero === etapaNum);
+  const articleRef = useRef<HTMLElement | null>(null);
+
+  // Imagens injetadas via dangerouslySetInnerHTML às vezes ficavam em "ponto"
+  // antes de carregar (quando o browser inferia loading: lazy ou decoding: async).
+  // Forçar eager + sync evita o flash de placeholder.
+  useEffect(() => {
+    const imgs = articleRef.current?.querySelectorAll('img') ?? [];
+    imgs.forEach((img) => {
+      img.loading = 'eager';
+      img.decoding = 'sync';
+    });
+  }, [paginaNum, etapaNum]);
 
   if (!etapa) {
     return (
@@ -33,6 +45,8 @@ export default function Etapa() {
 
   const chave = `${etapa.numero}-${paginaNum}`;
   const ComponenteCustom = COMPONENTES_PAGINA[chave];
+  const conteudo = ComponenteCustom ? null : getPagina(etapa.numero, paginaNum);
+  const html = conteudo ? resolverBase(conteudo.html, import.meta.env.BASE_URL) : null;
 
   return (
     <section className="container p-3">
@@ -54,30 +68,22 @@ export default function Etapa() {
       </header>
 
       {ComponenteCustom ? (
-        <article className="etapa-conteudo" aria-live="polite">
+        <article className="etapa-conteudo" aria-live="polite" ref={articleRef}>
           <ComponenteCustom />
         </article>
+      ) : html ? (
+        <article
+          className="etapa-conteudo"
+          aria-live="polite"
+          ref={articleRef}
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
       ) : (
-        (() => {
-          const conteudo = getPagina(etapa.numero, paginaNum);
-          if (!conteudo) {
-            return (
-              <article className="etapa-conteudo" aria-live="polite">
-                <p>
-                  <em>Conteúdo indisponível para a página {paginaNum}.</em>
-                </p>
-              </article>
-            );
-          }
-          const html = resolverBase(conteudo.html, import.meta.env.BASE_URL);
-          return (
-            <article
-              className="etapa-conteudo"
-              aria-live="polite"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          );
-        })()
+        <article className="etapa-conteudo" aria-live="polite" ref={articleRef}>
+          <p>
+            <em>Conteúdo indisponível para a página {paginaNum}.</em>
+          </p>
+        </article>
       )}
 
       <nav className="etapa-nav" aria-label="Navegação entre páginas">

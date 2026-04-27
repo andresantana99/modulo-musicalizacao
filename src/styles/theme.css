@@ -202,21 +202,52 @@ h1, h2, h3, h4, h5 {
   height: auto;
   border-radius: var(--radius-sm);
 }
-/* PNGs das figuras musicais são pretos sobre fundo transparente.
-   No dark mode o container fica escuro, então damos um fundo claro à imagem.
-   Exceção: imagens dentro de células com background-color próprio (etapa 3
-   tem tabelas coloridas) já têm contraste — não precisam do halo branco. */
+
+/* ── Categorização de imagens no conteúdo legacy ──────────────────────
+   Pequenas (figuras musicais 16-40px): têm width/height HTML mas SEM
+   style="max-width" inline. Inline no desktop (fileira), maior no mobile,
+   sempre centralizadas pela cascata text-align: center do legacy.
+   Grandes (illustrations, ex: imag*_etapa2.png, chimbal.png): têm
+   style="max-width" OU não têm width/height. Ocupam 100% da largura. */
+.etapa-conteudo img[width][height]:not([style*="max-width"]) {
+  display: inline-block;
+  vertical-align: middle;
+  height: 2em;
+  width: auto;
+  margin: 0.15rem 0.25rem;
+}
+.etapa-conteudo img[style*="max-width"],
+.etapa-conteudo img:not([width]):not([height]) {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Imagens em células coloridas (legendas etapa 3, compassos coloridos):
+   PNGs pretos sobre fundo colorido — invert torna brancos e visíveis. */
+.etapa-conteudo td[style*="background-color"] img,
+.etapa-conteudo th[style*="background-color"] img {
+  filter: invert(1) brightness(1.4);
+  display: inline-block !important;
+  margin: 0 !important;
+  height: 1.8em !important;
+  width: auto !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* PNGs (transparente preto) sobre o card escuro do dark mode: fundo branco.
+   Exceção: imagens em células coloridas, já tratadas acima. */
 [data-bs-theme="dark"] .etapa-conteudo img {
   background-color: #ffffff;
   padding: 4px;
 }
-[data-bs-theme="dark"] .etapa-conteudo [style*="background-color"] img {
+[data-bs-theme="dark"] .etapa-conteudo td[style*="background-color"] img,
+[data-bs-theme="dark"] .etapa-conteudo th[style*="background-color"] img {
   background-color: transparent;
   padding: 0;
 }
 
-/* Iframes do YouTube no legacy têm width: 1500px inline — sem isso o conteúdo
-   estoura a viewport no mobile e o scroll inicial não começa do header. */
+/* Iframes do YouTube no legacy têm width: 1500px inline — força responsivo. */
 .etapa-conteudo iframe {
   display: block;
   max-width: 100%;
@@ -226,13 +257,29 @@ h1, h2, h3, h4, h5 {
   border-radius: var(--radius-sm);
 }
 
+/* Cancelar margin negativa do .row Bootstrap quando vira card no legacy
+   (containers .row.bg-body-tertiary vazavam para fora do .etapa-conteudo). */
+.etapa-conteudo .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Tabelas centralizadas (w-50, w-25 etc.). Mantidas como tabela (não block)
+   para preservar table-cell — essencial nos compassos coloridos da etapa 3. */
+.etapa-conteudo table {
+  margin-left: auto;
+  margin-right: auto;
+}
+.etapa-conteudo .table-responsive {
+  overflow-x: auto;
+}
+
 /* Mobile: ajustes para usar a maior parte da tela */
 @media (max-width: 600px) {
-  /* Padding do card de conteúdo reduzido para ganhar espaço útil */
   .etapa-conteudo {
     padding: 1rem 0.75rem;
   }
-  /* Vídeos: extender até as bordas do card (cancela padding) e altura mínima */
+  /* Vídeos: extender até as bordas (cancela padding) */
   .etapa-conteudo iframe {
     margin-left: -0.75rem;
     margin-right: -0.75rem;
@@ -241,31 +288,8 @@ h1, h2, h3, h4, h5 {
     border-radius: 0;
     min-height: 200px;
   }
-  /* Figuras musicais (PNGs com width/height fixos de 16-40px) ficam ilegíveis no mobile.
-     display: block + margin: auto centraliza as solitárias e empilha as agrupadas
-     (várias imgs na mesma td separadas por &nbsp;) verticalmente, todas centralizadas. */
-  .etapa-conteudo img[width][height] {
-    width: auto !important;
-    height: 48px !important;
-    display: block;
-    margin: 0.4rem auto !important;
-  }
-  /* Tabelas legacy: fallback overflow-x + centralização (tabelas com w-50, w-25 etc.) */
-  .etapa-conteudo table {
-    display: block;
-    overflow-x: auto;
-    max-width: 100%;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  /* Garantir text-align: center nas células e wrappers — não cascata depois do display:block */
-  .etapa-conteudo td,
-  .etapa-conteudo th,
-  .etapa-conteudo .table-responsive {
-    text-align: center;
-  }
-  /* Imagens grandes (illustrations sem width/height fixo, ex: imag*_etapa2.png)
-     ocupam toda a largura disponível no mobile */
+  /* Imagens grandes (illustrations etapa 2): toda a largura, sem ficar limitadas ao td */
+  .etapa-conteudo img[style*="max-width"],
   .etapa-conteudo img:not([width]):not([height]) {
     width: 100% !important;
     max-width: 100% !important;
@@ -273,10 +297,17 @@ h1, h2, h3, h4, h5 {
     display: block;
     margin: 0.5rem auto;
   }
-  /* Headings menores para caber */
-  .etapa-conteudo .fs-4 { font-size: 1.05rem !important; }
-  .etapa-conteudo .fs-5 { font-size: 1rem !important; }
-  /* min-height inline (300-400px) gera espaço em branco enorme — neutralizar */
+  /* Pequenas no mobile: maiores e ainda inline (preservam a fileira horizontal
+     que era o layout do legacy — ex: colcheia + plus + colcheia + igual + seminima) */
+  .etapa-conteudo img[width][height]:not([style*="max-width"]) {
+    height: 2.4em;
+  }
+  /* Imagens em células coloridas: tamanho proporcional ao td */
+  .etapa-conteudo td[style*="background-color"] img,
+  .etapa-conteudo th[style*="background-color"] img {
+    height: 1.6em !important;
+  }
+  /* min-height inline (300-400px) do legacy gera espaço em branco enorme no mobile */
   .etapa-conteudo [style*="min-height"] {
     min-height: auto !important;
   }
@@ -512,7 +543,27 @@ h1, h2, h3, h4, h5 {
   width: 48px !important;
   height: 48px !important;
   object-fit: contain;
-  filter: invert(1) brightness(2);
+  filter: invert(1) brightness(1.6);
+}
+@media (max-width: 600px) {
+  /* Compactar cards no mobile — em compacto (col-6), 4 figuras lado a lado
+     ficavam enormes, jogando o botão Iniciar para fora da viewport */
+  .figura-card {
+    padding: 0.65rem 0.4rem;
+    min-height: 70px;
+    font-size: 0.9rem;
+  }
+  .figura-card-img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  /* Painel do metrônomo mais compacto */
+  .metronomo-painel {
+    padding: 1rem 0.75rem;
+  }
+  .metronomo-bpm-valor {
+    font-size: 2.2rem;
+  }
 }
 
 /* MontaCompasso */
@@ -597,7 +648,7 @@ h1, h2, h3, h4, h5 {
   width: 36px !important;
   height: 36px !important;
   object-fit: contain;
-  filter: invert(1) brightness(2);
+  filter: invert(1) brightness(1.5);
 }
 
 /* Legenda de cores compartilhada entre MetronomoVisual e MontaCompasso */
@@ -642,10 +693,12 @@ h1, h2, h3, h4, h5 {
   box-shadow: var(--shadow-sm);
 }
 .legenda-figura-img {
-  width: 24px !important;
-  height: 24px !important;
+  width: 26px !important;
+  height: 26px !important;
   object-fit: contain;
-  filter: invert(1) brightness(2);
+  /* brightness(2) extrapolava e algumas figuras (ex: Semicolcheia, com hastes
+     finas) ficavam invisíveis. brightness(1.5) preserva o detalhe. */
+  filter: invert(1) brightness(1.5);
 }
 .legenda-figura-nome {
   font-size: 0.92rem;

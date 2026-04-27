@@ -13,8 +13,12 @@ export default function useAcessibilidade() {
   }, [tema]);
 
   useEffect(() => {
+    // font-size no <html> escala todos os rem (Bootstrap fs-*, nosso CSS) consistentemente
+    // em desktop e mobile. body.style.zoom era instável no Safari iOS e em conteúdo legacy
+    // injetado via dangerouslySetInnerHTML — só escalava partes do React puro.
     document.documentElement.style.setProperty('--zoom', String(zoom));
-    document.body.style.setProperty('zoom', `${zoom}%`);
+    document.documentElement.style.fontSize = `${zoom}%`;
+    document.body.style.removeProperty('zoom');
   }, [zoom]);
 
   return {

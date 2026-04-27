@@ -2,8 +2,7 @@
 @import './theme.css';
 
 .page-container {
-  /* compensa o zoom CSS do body: sem isso, 100vh se expande visualmente e o footer some */
-  min-height: calc(100vh * (100 / var(--zoom, 100)));
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
