@@ -73,6 +73,6 @@
   },
   {
     "pagina": 19,
-    "html": "<div class=\"row p-3 mb-4 bg-body-tertiary rounded-3\" style=\"min-height: 400px; margin: auto;\">\r\n    <div class=\"text-center pt-3\">\r\n        <p class=\"fs-4 fw-bold\">Parabéns! Você concluiu a Etapa 1.</p>\r\n        <br>\r\n        <p class=\"fs-4\">Clique em Avançar para iniciar a Etapa 2 ou clique em Seleção de etapa para escolher outra etapa.</p>\r\n        <br>\r\n    </div>\r\n</div>"
+    "html": "<div class=\"row p-3 mb-4 bg-body-tertiary rounded-3\" style=\"min-height: 400px; margin: auto;\">\r\n    <div class=\"text-center pt-3\">\r\n        <p class=\"fs-4 fw-bold\">Parabéns! Você concluiu o conteúdo da Etapa 1.</p>\r\n        <br>\r\n        <p class=\"fs-4\">Clique em <strong>Ir para atividades</strong> para iniciar os exercícios desta etapa, ou em <strong>Anterior</strong> para revisar o conteúdo.</p>\r\n        <br>\r\n    </div>\r\n</div>"
   }
 ]

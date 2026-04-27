@@ -19,7 +19,7 @@ export const etapas: EtapaConfig[] = [
     titulo: 'Elementos da bateria',
     descricao: 'Bumbo, caixa, chimbal e sua notação em cores.',
     cor: '#2D9CDB',
-    totalPaginas: 26,
+    totalPaginas: 33,
   },
   {
     numero: 3,
