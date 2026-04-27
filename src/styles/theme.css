@@ -241,16 +241,37 @@ h1, h2, h3, h4, h5 {
     border-radius: 0;
     min-height: 200px;
   }
-  /* Figuras musicais (PNGs com width/height fixos de 16-40px) ficam ilegíveis no mobile */
+  /* Figuras musicais (PNGs com width/height fixos de 16-40px) ficam ilegíveis no mobile.
+     display: block + margin: auto centraliza as solitárias e empilha as agrupadas
+     (várias imgs na mesma td separadas por &nbsp;) verticalmente, todas centralizadas. */
   .etapa-conteudo img[width][height] {
     width: auto !important;
     height: 48px !important;
+    display: block;
+    margin: 0.4rem auto !important;
   }
-  /* Tabelas legacy sem .table-responsive — fallback para overflow horizontal */
+  /* Tabelas legacy: fallback overflow-x + centralização (tabelas com w-50, w-25 etc.) */
   .etapa-conteudo table {
     display: block;
     overflow-x: auto;
     max-width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  /* Garantir text-align: center nas células e wrappers — não cascata depois do display:block */
+  .etapa-conteudo td,
+  .etapa-conteudo th,
+  .etapa-conteudo .table-responsive {
+    text-align: center;
+  }
+  /* Imagens grandes (illustrations sem width/height fixo, ex: imag*_etapa2.png)
+     ocupam toda a largura disponível no mobile */
+  .etapa-conteudo img:not([width]):not([height]) {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 0.5rem auto;
   }
   /* Headings menores para caber */
   .etapa-conteudo .fs-4 { font-size: 1.05rem !important; }
