@@ -202,6 +202,12 @@ h1, h2, h3, h4, h5 {
   height: auto;
   border-radius: var(--radius-sm);
 }
+/* PNGs das figuras musicais são pretos sobre fundo transparente.
+   No dark mode o container fica escuro, então damos um fundo claro à imagem. */
+[data-bs-theme="dark"] .etapa-conteudo img {
+  background-color: #ffffff;
+  padding: 4px;
+}
 
 /* Navegação — fixa, alinhada com a borda dos cards internos do container */
 .etapa-nav {
