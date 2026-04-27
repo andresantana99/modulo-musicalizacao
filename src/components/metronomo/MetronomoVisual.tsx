@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import LegendaFiguras from '@/components/figura/LegendaFiguras';
 
 type Figura = {
   nome: string;
   cor: string;
+  arquivo: string;
   beatsPorCiclo: number;
 };
 
 const FIGURAS: Figura[] = [
-  { nome: 'Semicolcheia', cor: '#B9C303', beatsPorCiclo: 0.25 },
-  { nome: 'Colcheia',     cor: '#E6972A', beatsPorCiclo: 0.5  },
-  { nome: 'Semínima',     cor: '#17867C', beatsPorCiclo: 1    },
-  { nome: 'Mínima',       cor: '#820742', beatsPorCiclo: 2    },
-  { nome: 'Semibreve',    cor: '#c2410c', beatsPorCiclo: 4    },
+  { nome: 'Semicolcheia', cor: '#B9C303', arquivo: 'semicolcheia.png', beatsPorCiclo: 0.25 },
+  { nome: 'Colcheia',     cor: '#E6972A', arquivo: 'colcheia.png',     beatsPorCiclo: 0.5  },
+  { nome: 'Semínima',     cor: '#17867C', arquivo: 'seminima.png',     beatsPorCiclo: 1    },
+  { nome: 'Mínima',       cor: '#820742', arquivo: 'minima.png',       beatsPorCiclo: 2    },
+  { nome: 'Semibreve',    cor: '#c2410c', arquivo: 'semibreve.png',    beatsPorCiclo: 4    },
 ];
 
 const BPM_MIN = 20;
@@ -183,12 +185,19 @@ export default function MetronomoVisual({ compacto = false }: Props) {
                 role="img"
                 aria-label={`${f.nome} — ${ativa ? 'ativa' : 'em pausa'}`}
               >
-                {f.nome}
+                <img
+                  src={`${import.meta.env.BASE_URL}img/${f.arquivo}`}
+                  alt=""
+                  aria-hidden="true"
+                  className="figura-card-img"
+                />
               </div>
             </div>
           );
         })}
       </div>
+
+      <LegendaFiguras figuras={figuras} />
     </div>
   );
 }

@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import LegendaFiguras from '@/components/figura/LegendaFiguras';
 
 type Figura = {
   id: 'seminima' | 'colcheia' | 'semicolcheia' | 'minima';
   nome: string;
   cor: string;
+  arquivo: string;
   duracao: number;
 };
 
 const FIGURAS: Figura[] = [
-  { id: 'semicolcheia', nome: 'Semicolcheia', cor: '#B9C303', duracao: 0.25 },
-  { id: 'colcheia',     nome: 'Colcheia',     cor: '#E6972A', duracao: 0.5  },
-  { id: 'seminima',     nome: 'Semínima',     cor: '#17867C', duracao: 1    },
-  { id: 'minima',       nome: 'Mínima',       cor: '#820742', duracao: 2    },
+  { id: 'semicolcheia', nome: 'Semicolcheia', cor: '#B9C303', arquivo: 'semicolcheia.png', duracao: 0.25 },
+  { id: 'colcheia',     nome: 'Colcheia',     cor: '#E6972A', arquivo: 'colcheia.png',     duracao: 0.5  },
+  { id: 'seminima',     nome: 'Semínima',     cor: '#17867C', arquivo: 'seminima.png',     duracao: 1    },
+  { id: 'minima',       nome: 'Mínima',       cor: '#820742', arquivo: 'minima.png',       duracao: 2    },
 ];
 
 const COMPASSO_TEMPOS = 4;
@@ -214,14 +216,22 @@ export default function MontaCompasso() {
                 style={{ backgroundColor: f.cor }}
                 onClick={() => adicionar(f)}
                 disabled={!cabe || tocando}
+                aria-label={`Adicionar ${f.nome} (${f.duracao} tempo${f.duracao !== 1 ? 's' : ''})`}
               >
-                {f.nome}
+                <img
+                  src={`${import.meta.env.BASE_URL}img/${f.arquivo}`}
+                  alt=""
+                  aria-hidden="true"
+                  className="figura-botao-img"
+                />
                 <span className="figura-botao-tempo">{f.duracao}T</span>
               </button>
             </div>
           );
         })}
       </div>
+
+      <LegendaFiguras figuras={FIGURAS} />
 
       <div className="d-flex gap-2 justify-content-center flex-wrap mt-4">
         <button
