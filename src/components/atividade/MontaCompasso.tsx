@@ -145,7 +145,9 @@ export default function MontaCompasso() {
   useEffect(() => {
     return () => {
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
-      sourcesRef.current.forEach((src) => { try { src.stop(0); } catch {} });
+      sourcesRef.current.forEach((src) => {
+        try { src.stop(0); } catch { /* nó já parado/desconectado */ }
+      });
       audioCtxRef.current?.close();
     };
   }, []);
