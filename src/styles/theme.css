@@ -203,10 +203,99 @@ h1, h2, h3, h4, h5 {
   border-radius: var(--radius-sm);
 }
 /* PNGs das figuras musicais são pretos sobre fundo transparente.
-   No dark mode o container fica escuro, então damos um fundo claro à imagem. */
+   No dark mode o container fica escuro, então damos um fundo claro à imagem.
+   Exceção: imagens dentro de células com background-color próprio (etapa 3
+   tem tabelas coloridas) já têm contraste — não precisam do halo branco. */
 [data-bs-theme="dark"] .etapa-conteudo img {
   background-color: #ffffff;
   padding: 4px;
+}
+[data-bs-theme="dark"] .etapa-conteudo [style*="background-color"] img {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Iframes do YouTube no legacy têm width: 1500px inline — sem isso o conteúdo
+   estoura a viewport no mobile e o scroll inicial não começa do header. */
+.etapa-conteudo iframe {
+  display: block;
+  max-width: 100%;
+  width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+/* Mobile: ajustes para usar a maior parte da tela */
+@media (max-width: 600px) {
+  /* Padding do card de conteúdo reduzido para ganhar espaço útil */
+  .etapa-conteudo {
+    padding: 1rem 0.75rem;
+  }
+  /* Vídeos: extender até as bordas do card (cancela padding) e altura mínima */
+  .etapa-conteudo iframe {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+    width: calc(100% + 1.5rem) !important;
+    max-width: calc(100% + 1.5rem);
+    border-radius: 0;
+    min-height: 200px;
+  }
+  /* Figuras musicais (PNGs com width/height fixos de 16-40px) ficam ilegíveis no mobile */
+  .etapa-conteudo img[width][height] {
+    width: auto !important;
+    height: 48px !important;
+  }
+  /* Tabelas legacy sem .table-responsive — fallback para overflow horizontal */
+  .etapa-conteudo table {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  /* Headings menores para caber */
+  .etapa-conteudo .fs-4 { font-size: 1.05rem !important; }
+  .etapa-conteudo .fs-5 { font-size: 1rem !important; }
+  /* min-height inline (300-400px) gera espaço em branco enorme — neutralizar */
+  .etapa-conteudo [style*="min-height"] {
+    min-height: auto !important;
+  }
+}
+
+/* Previne overflow horizontal de elementos legacy (iframes 1500px, tabelas largas) */
+.page-container {
+  overflow-x: hidden;
+}
+
+/* Mobile: header principal (logo + título grande) */
+@media (max-width: 600px) {
+  #header h1 {
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  #header img {
+    width: 60px;
+    height: auto;
+  }
+  #header {
+    gap: 0.5rem;
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+  /* Cabeçalhos de etapa/atividade compactos */
+  .etapa-header {
+    padding: 1rem 1.1rem;
+  }
+  .etapa-header h2 {
+    font-size: 1.15rem;
+  }
+  .atividade-header {
+    padding: 0.7rem 0.85rem;
+  }
+  .atividade-pontos-badge,
+  .atividade-streak {
+    font-size: 0.78rem;
+    padding: 0.18rem 0.55rem;
+  }
 }
 
 /* Navegação — fixa, alinhada com a borda dos cards internos do container */
@@ -239,8 +328,18 @@ h1, h2, h3, h4, h5 {
   white-space: nowrap;
   flex-shrink: 0;
 }
-@media (max-width: 400px) {
+@media (max-width: 600px) {
   .etapa-nav-copy { display: none; }
+  .etapa-nav-inner {
+    padding: 0.5rem;
+    gap: 0.4rem;
+  }
+  .etapa-nav-inner .btn {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.85rem;
+    flex: 1;
+    text-align: center;
+  }
 }
 
 /* ── QuizPergunta redesign ── */
@@ -659,4 +758,13 @@ h1, h2, h3, h4, h5 {
   gap: 0.75rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+@media (max-width: 600px) {
+  .resultado-acoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .resultado-acoes .btn {
+    width: 100%;
+  }
 }

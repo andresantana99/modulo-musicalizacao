@@ -292,7 +292,7 @@ export default function Atividades() {
       />
 
       {respondidaAgora && (
-        <div className="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+        <div className="d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center mt-3 gap-2">
           <Link to={`/etapa/${etapa.numero}`} className="btn btn-outline-secondary">
             ← Voltar ao conteúdo
           </Link>
