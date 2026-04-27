@@ -1,24 +1,48 @@
 import type React from 'react';
-import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BotoesAcessibilidade from '@/components/acessibilidade/BotoesAcessibilidade';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const naHome = pathname === '/';
+
+  const aoClicarTitulo = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (naHome) return;
+    const ok = window.confirm(
+      'Deseja sair desta tela e ir para a seleção de etapas? O progresso da etapa atual é mantido.',
+    );
+    if (ok) navigate('/etapas');
+  };
+
   return (
     <header
       id="header"
-      className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-      style={{ background: 'var(--surface-1)', borderColor: 'var(--border-soft)' } as React.CSSProperties}
+      className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-3 mb-4 border-bottom"
+      style={{
+        background: 'var(--surface-1)',
+        borderColor: 'var(--border-soft)',
+        borderRadius: 'var(--radius-md)',
+      } as React.CSSProperties}
     >
-      <Link to="/" className="d-flex align-items-center mb-2 mb-md-0 text-decoration-none text-reset">
+      <a
+        href="#/etapas"
+        onClick={aoClicarTitulo}
+        className={`d-flex align-items-center mb-2 mb-md-0 text-decoration-none text-reset ${naHome ? 'pe-none' : ''}`}
+        aria-disabled={naHome}
+        title={naHome ? '' : 'Ir para a seleção de etapas'}
+      >
         <img
           src={`${import.meta.env.BASE_URL}img/logo-ufpa.svg`}
           width={90}
           height={52}
           alt="Logotipo da Universidade Federal do Pará"
+          className="header-logo"
         />
         &ensp;
         <h1 className="h4 m-0">Módulo de Musicalização para Sons Percussivos</h1>
-      </Link>
+      </a>
       <BotoesAcessibilidade />
     </header>
   );

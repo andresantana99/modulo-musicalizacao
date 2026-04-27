@@ -216,28 +216,45 @@ h1, h2, h3, h4, h5 {
   width: auto;
   margin: 0.15rem 0.25rem;
 }
+/* Imagens grandes (illustrations da etapa 2 com style="max-width: 100%")
+   ocupam toda a largura disponível mesmo em desktop — sem isso ficam
+   limitadas ao td dentro de tabelas com w-50. */
 .etapa-conteudo img[style*="max-width"],
 .etapa-conteudo img:not([width]):not([height]) {
+  width: 100%;
   max-width: 100%;
   height: auto;
 }
+/* E a tabela que as contém também — assim a imagem realmente ocupa toda largura */
+.etapa-conteudo table:has(img[style*="max-width"]) {
+  width: 100% !important;
+}
+.etapa-conteudo td:has(> img[style*="max-width"]) {
+  padding: 0.25rem !important;
+}
 
 /* Imagens em células coloridas (legendas etapa 3, compassos coloridos):
-   PNGs pretos sobre fundo colorido — invert torna brancos e visíveis. */
+   PNGs pretos sobre fundo colorido — invert torna brancos e visíveis.
+   Tamanho generoso para que a semicolcheia (hastes finas) seja legível
+   em todos os zooms; brightness/contrast preservam os detalhes. */
 .etapa-conteudo td[style*="background-color"] img,
 .etapa-conteudo th[style*="background-color"] img {
-  filter: invert(1) brightness(1.4);
+  filter: invert(1) brightness(1.6) contrast(1.15);
   display: inline-block !important;
   margin: 0 !important;
-  height: 1.8em !important;
+  height: 2.5em !important;
   width: auto !important;
   background: transparent !important;
   padding: 0 !important;
 }
 
-/* PNGs (transparente preto) sobre o card escuro do dark mode: fundo branco.
-   Exceção: imagens em células coloridas, já tratadas acima. */
-[data-bs-theme="dark"] .etapa-conteudo img {
+/* Dark mode: PNGs pretos do legacy (transparente preto) sobre o card escuro
+   precisam de fundo branco para visualização. Restringido a imagens do
+   conteúdo legacy (width=... OU style="max-width") — NÃO atinge as imagens
+   dos componentes React (.figura-botao-img, .figura-card-img,
+   .legenda-figura-img) que já tratam contraste via filter:invert. */
+[data-bs-theme="dark"] .etapa-conteudo img[width],
+[data-bs-theme="dark"] .etapa-conteudo img[style*="max-width"] {
   background-color: #ffffff;
   padding: 4px;
 }
@@ -302,10 +319,10 @@ h1, h2, h3, h4, h5 {
   .etapa-conteudo img[width][height]:not([style*="max-width"]) {
     height: 2.4em;
   }
-  /* Imagens em células coloridas: tamanho proporcional ao td */
+  /* Imagens em células coloridas no mobile: tamanho generoso para legibilidade */
   .etapa-conteudo td[style*="background-color"] img,
   .etapa-conteudo th[style*="background-color"] img {
-    height: 1.6em !important;
+    height: 2.2em !important;
   }
   /* min-height inline (300-400px) do legacy gera espaço em branco enorme no mobile */
   .etapa-conteudo [style*="min-height"] {
@@ -324,14 +341,13 @@ h1, h2, h3, h4, h5 {
     font-size: 1rem;
     line-height: 1.2;
   }
-  #header img {
-    width: 60px;
+  #header .header-logo {
+    width: 56px;
     height: auto;
   }
   #header {
     gap: 0.5rem;
-    padding-top: 0.75rem !important;
-    padding-bottom: 0.75rem !important;
+    padding: 0.75rem 0.85rem !important;
   }
   /* Cabeçalhos de etapa/atividade compactos */
   .etapa-header {
