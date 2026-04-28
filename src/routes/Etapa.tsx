@@ -4,8 +4,16 @@ import { etapas } from '@/content/etapas.config';
 import { getPagina, resolverBase } from '@/content/paginas';
 import MontaCompasso from '@/components/atividade/MontaCompasso';
 import MetronomoInline from '@/components/atividade/MetronomoInline';
+import CompassoEstatico from '@/components/atividade/CompassoEstatico';
 
 const COMPONENTES_PAGINA: Record<string, ComponentType> = {
+  '3-1': CompassoEstatico,
+  '3-2': CompassoEstatico,
+  '3-3': CompassoEstatico,
+  '3-4': CompassoEstatico,
+  '3-5': CompassoEstatico,
+  '3-6': CompassoEstatico,
+  '3-7': CompassoEstatico,
   '3-8': MontaCompasso,
   '3-9': MetronomoInline,
 };
