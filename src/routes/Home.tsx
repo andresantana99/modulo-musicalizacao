@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function Home() {
   return (
     <section className="container p-4">
@@ -14,6 +16,7 @@ export default function Home() {
         <div className="col-lg-5 col-md-6">
           <Link to="/etapa/1/pagina/1" className="etapa-card text-decoration-none text-reset"
             style={{ ['--etapa-cor' as string]: '#e6972a' } as React.CSSProperties}>
+            <img src={`${BASE}img/beginner.svg`} alt="" aria-hidden="true" className="home-card-img" />
             <div className="small text-body-secondary fw-semibold text-uppercase">Começar</div>
             <h4 className="mt-1 mb-1">É a sua primeira vez aqui?</h4>
             <p className="text-body-secondary mb-0">Comece do zero, pela Etapa 1.</p>
@@ -22,6 +25,7 @@ export default function Home() {
         <div className="col-lg-5 col-md-6">
           <Link to="/etapas" className="etapa-card text-decoration-none text-reset"
             style={{ ['--etapa-cor' as string]: '#2d9cdb' } as React.CSSProperties}>
+            <img src={`${BASE}img/finish.svg`} alt="" aria-hidden="true" className="home-card-img" />
             <div className="small text-body-secondary fw-semibold text-uppercase">Continuar</div>
             <h4 className="mt-1 mb-1">Já acessou antes?</h4>
             <p className="text-body-secondary mb-0">Escolha a etapa desejada.</p>

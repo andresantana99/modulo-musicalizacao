@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { etapas } from '@/content/etapas.config';
 
+const BASE = import.meta.env.BASE_URL;
+
 export default function SelecaoEtapa() {
   return (
     <section className="container p-3">
@@ -18,6 +20,14 @@ export default function SelecaoEtapa() {
             className="etapa-card text-decoration-none text-reset"
             style={{ ['--etapa-cor' as string]: etapa.cor } as React.CSSProperties}
           >
+            {etapa.icone && (
+              <img
+                src={`${BASE}img/${etapa.icone}`}
+                alt=""
+                aria-hidden="true"
+                className="etapa-card-img"
+              />
+            )}
             <div className="small text-body-secondary fw-semibold text-uppercase">
               Etapa {etapa.numero}
             </div>
