@@ -283,17 +283,21 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ── Categorização de imagens no conteúdo legacy ──────────────────────
-   Pequenas (figuras musicais 16-40px): pelo VALOR do atributo width.
+   Pequenas (figuras musicais 16-52px): pelo VALOR do atributo width.
+   Inclui variantes pontuadas (35, 42) e pausas (52).
    max-width: none sobrescreve qualquer style="max-width: 100%" inline
    que algumas têm (página 5 etapa 1). */
 .etapa-conteudo img[width="16"],
 .etapa-conteudo img[width="20"],
 .etapa-conteudo img[width="30"],
 .etapa-conteudo img[width="32"],
-.etapa-conteudo img[width="40"] {
+.etapa-conteudo img[width="35"],
+.etapa-conteudo img[width="40"],
+.etapa-conteudo img[width="42"],
+.etapa-conteudo img[width="52"] {
   display: inline-block;
   vertical-align: middle;
-  height: 2em;
+  height: 3.5em;
   width: auto;
   max-width: none;
   margin: 0.15rem 0.25rem;
@@ -301,7 +305,7 @@ h1, h2, h3, h4, h5 {
 /* Imagens grandes do legacy: ALVO restrito a <img> filhas diretas de <td>
    (estrutura do legacy) que NÃO sejam pequenas. Evita atingir imagens dos
    componentes React (.figura-botao-img, .figura-card-img — não estão em td). */
-.etapa-conteudo td > img:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="40"]) {
+.etapa-conteudo td > img:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="35"]):not([width="40"]):not([width="42"]):not([width="52"]) {
   width: 100%;
   max-width: 100%;
   height: auto;
@@ -354,13 +358,15 @@ h1, h2, h3, h4, h5 {
 
 /* Mobile / fonte aumentada: cada par chip+nome em sua própria linha.
    Linha do legacy tem 4 td: chip|nome|chip|nome. Convertendo em grid
-   de 2 colunas, a 2ª dupla automaticamente vai pra próxima linha. */
+   de 2 colunas, a 2ª dupla automaticamente vai pra próxima linha.
+   Restrito a tabelas que têm imagens dentro de células coloridas (legendas),
+   para NÃO afetar as tabelas de frações da Etapa 1 p.2-4 (só texto). */
 @media (max-width: 600px) {
-  .etapa-conteudo table:not(:has(tr.unidades-tempo)),
-  .etapa-conteudo table:not(:has(tr.unidades-tempo)) tbody {
+  .etapa-conteudo table:not(:has(tr.unidades-tempo)):has(td img),
+  .etapa-conteudo table:not(:has(tr.unidades-tempo)):has(td img) tbody {
     display: block;
   }
-  .etapa-conteudo table:not(:has(tr.unidades-tempo)) tr {
+  .etapa-conteudo table:not(:has(tr.unidades-tempo)):has(td img) tr {
     display: grid;
     grid-template-columns: auto 1fr auto 1fr;
     gap: 0.4rem;
@@ -369,7 +375,7 @@ h1, h2, h3, h4, h5 {
   }
 }
 @media (max-width: 480px) {
-  .etapa-conteudo table:not(:has(tr.unidades-tempo)) tr {
+  .etapa-conteudo table:not(:has(tr.unidades-tempo)):has(td img) tr {
     grid-template-columns: auto 1fr;
   }
 }
@@ -415,20 +421,49 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-/* Dark mode: PNGs pretos do legacy (transparente preto) sobre o card escuro
-   precisam de fundo branco para visualização. Restringido a imagens do
-   conteúdo legacy (width=... OU style="max-width") — NÃO atinge as imagens
-   dos componentes React (.figura-botao-img, .figura-card-img,
-   .legenda-figura-img) que já tratam contraste via filter:invert. */
-[data-bs-theme="dark"] .etapa-conteudo img[width],
-[data-bs-theme="dark"] .etapa-conteudo img[style*="max-width"] {
+/* Dark mode: imagens fotográficas grandes (instrumentos, pautas) sem width
+   explícito ou com width grande — fundo branco para manter legibilidade. */
+[data-bs-theme="dark"] .etapa-conteudo img[style*="max-width"]:not([width]) {
   background-color: #ffffff;
   padding: 4px;
 }
+
+/* Dark mode: símbolos musicais pequenos (width 16-52) — usar filter:invert
+   ao invés de fundo branco, eliminando a faixa branca ao redor. */
+[data-bs-theme="dark"] .etapa-conteudo img[width="16"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="20"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="30"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="32"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="35"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="40"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="42"],
+[data-bs-theme="dark"] .etapa-conteudo img[width="52"] {
+  filter: invert(1) brightness(1.4) contrast(1.1);
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+/* Células coloridas (compassos + legendas) têm especificidade maior e
+   mantêm seu próprio filter para preservar brilho/contraste ideais. */
 [data-bs-theme="dark"] .etapa-conteudo td[style*="background-color"] img,
 [data-bs-theme="dark"] .etapa-conteudo th[style*="background-color"] img {
-  background-color: transparent;
-  padding: 0;
+  filter: invert(1) brightness(1.6) contrast(1.15);
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+/* Dark mode: bordas brancas (table-bordered border-light) nas tabelas de
+   frações da Etapa 1 p.2-4 — suaviza para cinza sutil. */
+[data-bs-theme="dark"] .etapa-conteudo table.table-bordered.border-light,
+[data-bs-theme="dark"] .etapa-conteudo table.table-bordered.border-light td,
+[data-bs-theme="dark"] .etapa-conteudo table.table-bordered.border-light th {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  --bs-table-border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Centralizar texto nas células coloridas das tabelas de fração
+   (Etapa 1 p.2-4: tabelas sem imagens em células coloridas). */
+.etapa-conteudo table:not(:has(tr.unidades-tempo)):not(:has(td img)) td[style*="background-color"] {
+  text-align: center;
 }
 
 /* Iframes do YouTube no legacy têm width: 1500px inline — força responsivo. */
@@ -475,16 +510,23 @@ h1, h2, h3, h4, h5 {
   /* Imagens grandes (illustrations etapa 2): no mobile usam toda largura.
      No desktop ficam com max-width: 560px (regra base, fora do media query). */
   .etapa-conteudo img:not([width]),
-  .etapa-conteudo img[style*="max-width"]:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="40"]) {
+  .etapa-conteudo img[style*="max-width"]:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="35"]):not([width="40"]):not([width="42"]):not([width="52"]) {
     max-width: 100% !important;
   }
-  /* Pequenas no mobile: maiores para legibilidade */
+  /* Pequenas no mobile: maiores para legibilidade (inclui variantes pontuadas e pausas) */
   .etapa-conteudo img[width="16"],
   .etapa-conteudo img[width="20"],
   .etapa-conteudo img[width="30"],
   .etapa-conteudo img[width="32"],
-  .etapa-conteudo img[width="40"] {
-    height: 2.4em !important;
+  .etapa-conteudo img[width="35"],
+  .etapa-conteudo img[width="40"],
+  .etapa-conteudo img[width="42"],
+  .etapa-conteudo img[width="52"] {
+    height: 3em !important;
+  }
+  /* Tabelas w-50 no mobile ficam com largura total para melhor aproveitamento */
+  .etapa-conteudo table.w-50 {
+    width: 100% !important;
   }
   /* min-height inline (300-400px) do legacy gera espaço em branco enorme no mobile */
   .etapa-conteudo [style*="min-height"] {
@@ -935,6 +977,28 @@ h1, h2, h3, h4, h5 {
 }
 @media (max-width: 479px) {
   .etapas-grid { grid-template-columns: 1fr; }
+}
+
+/* Imagens ilustrativas nos cards de Home e SelecaoEtapa */
+.home-card-img,
+.etapa-card-img {
+  display: block;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.home-card-img {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 0.75rem;
+}
+.etapa-card-img {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 0.5rem;
+}
+@media (max-width: 600px) {
+  .home-card-img { width: 52px; height: 52px; }
+  .etapa-card-img { width: 44px; height: 44px; }
 }
 
 /* Cards de seleção de etapas */
