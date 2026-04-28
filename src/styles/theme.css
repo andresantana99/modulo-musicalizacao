@@ -107,6 +107,85 @@ h1, h2, h3, h4, h5 {
   max-width: 1080px;
 }
 
+/* ── Modal de confirmação ───────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 1rem;
+  animation: modal-fade-in 160ms ease-out;
+}
+/* Botão invisível atrás do dialog: clique fora fecha. */
+.modal-overlay-bg {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: default;
+}
+.modal-dialog-custom {
+  position: relative;
+  z-index: 1;
+}
+.modal-dialog-custom {
+  background: var(--surface-1);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 1.75rem;
+  max-width: 460px;
+  width: 100%;
+  color: var(--text-primary);
+  animation: modal-slide-up 200ms ease-out;
+}
+.modal-titulo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+  color: var(--text-heading);
+}
+.modal-mensagem {
+  margin: 0 0 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.97rem;
+  line-height: 1.5;
+}
+.modal-acoes {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.modal-acoes .btn {
+  min-width: 110px;
+}
+@media (max-width: 480px) {
+  .modal-acoes {
+    flex-direction: column-reverse;
+  }
+  .modal-acoes .btn {
+    width: 100%;
+  }
+}
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modal-slide-up {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay, .modal-dialog-custom { animation: none; }
+}
+
 /* Botões refinados */
 .btn {
   border-radius: var(--radius-sm);
@@ -242,10 +321,49 @@ h1, h2, h3, h4, h5 {
   filter: invert(1) brightness(1.6) contrast(1.15);
   display: inline-block !important;
   margin: 0 !important;
-  height: 2.5em !important;
+  height: 3em !important;
   width: auto !important;
   background: transparent !important;
   padding: 0 !important;
+}
+
+/* ── Legenda de cores legacy (etapa 3): visual modernizado parecido com
+   o componente LegendaFiguras — chip colorido arredondado + nome ao lado.
+   Distinção entre legenda e compasso: linha de compasso usa <tr class="unidades-tempo">. */
+.etapa-conteudo table:not(:has(tr.unidades-tempo)) {
+  border-collapse: separate;
+  border-spacing: 0.4rem;
+}
+.etapa-conteudo table:not(:has(tr.unidades-tempo)) td[style*="background-color"] {
+  border-radius: var(--radius-sm) !important;
+  width: 70px !important;
+  min-width: 60px;
+  vertical-align: middle;
+  padding: 0.4rem !important;
+  box-shadow: var(--shadow-sm);
+}
+.etapa-conteudo table:not(:has(tr.unidades-tempo)) td:not([style*="background-color"]) {
+  font-weight: 600;
+  vertical-align: middle;
+  padding: 0.4rem 0.6rem !important;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  border: none !important;
+  text-align: left !important;
+}
+
+/* Compassos da etapa 3 (tabelas com tr.unidades-tempo): ocupar toda largura,
+   células maiores → semicolcheia visível mesmo nas células estreitas (12.5% width). */
+.etapa-conteudo table:has(tr.unidades-tempo) {
+  width: 100% !important;
+  table-layout: fixed;
+}
+.etapa-conteudo tr.unidades-tempo td {
+  padding: 0.85rem 0.4rem !important;
+  vertical-align: middle;
+}
+.etapa-conteudo tr.unidades-tempo td[style*="background-color"] img {
+  height: 3.2em !important;
 }
 
 /* Dark mode: PNGs pretos do legacy (transparente preto) sobre o card escuro
