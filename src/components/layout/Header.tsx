@@ -55,7 +55,7 @@ export default function Header() {
       <Modal
         aberto={confirmacaoAberta}
         titulo="Voltar para a tela inicial?"
-        mensagem="Você será redirecionado para a página inicial do módulo. O progresso das etapas é mantido."
+        mensagem="Você será redirecionado para a página inicial do módulo. O progresso das etapas é perdido."
         textoConfirmar="Sim, voltar"
         textoCancelar="Cancelar"
         onConfirmar={confirmarSaida}

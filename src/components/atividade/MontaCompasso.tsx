@@ -204,7 +204,29 @@ export default function MontaCompasso() {
         indiceInicial={compasso1.length}
       />
 
-      <h4 className="mt-4 mb-3">Clique nas figuras para montar o compasso:</h4>
+      {/* Botões de ação ACIMA das figuras: ao clicar em Tocar, o usuário vê
+          os compassos rolando sem precisar fazer scroll. */}
+      <div className="d-flex gap-2 justify-content-center flex-wrap mt-3 mb-2">
+        <button
+          type="button"
+          className={`btn btn-lg ${tocando ? 'btn-danger' : 'btn-success'}`}
+          onClick={tocar}
+          disabled={totalGeral === 0}
+          aria-pressed={tocando}
+        >
+          {tocando ? '■ Parar' : '▶ Tocar sequência'}
+        </button>
+        <button
+          type="button"
+          className="btn btn-lg btn-outline-secondary"
+          onClick={limpar}
+          disabled={totalGeral === 0 || tocando}
+        >
+          ↻ Limpar
+        </button>
+      </div>
+
+      <h4 className="mt-3 mb-3">Clique nas figuras para montar o compasso:</h4>
       <div className="row g-2">
         {FIGURAS.map((f) => {
           const cabe = !cheio1 || (cheio1 && t2 + f.duracao <= COMPASSO_TEMPOS);
@@ -232,26 +254,6 @@ export default function MontaCompasso() {
       </div>
 
       <LegendaFiguras figuras={FIGURAS} />
-
-      <div className="d-flex gap-2 justify-content-center flex-wrap mt-4">
-        <button
-          type="button"
-          className={`btn btn-lg ${tocando ? 'btn-danger' : 'btn-success'}`}
-          onClick={tocar}
-          disabled={totalGeral === 0}
-          aria-pressed={tocando}
-        >
-          {tocando ? '■ Parar' : '▶ Tocar sequência'}
-        </button>
-        <button
-          type="button"
-          className="btn btn-lg btn-outline-secondary"
-          onClick={limpar}
-          disabled={totalGeral === 0 || tocando}
-        >
-          ↻ Limpar
-        </button>
-      </div>
     </div>
   );
 }
@@ -291,7 +293,12 @@ function Compasso({ titulo, notas, preenchido, indiceAtivoGlobal, indiceInicial 
                 }}
                 title={n.figura.nome}
               >
-                {n.figura.nome.charAt(0)}
+                <img
+                  src={`${import.meta.env.BASE_URL}img/${n.figura.arquivo}`}
+                  alt=""
+                  aria-hidden="true"
+                  className="compasso-nota-img"
+                />
               </div>
             );
           })
