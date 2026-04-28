@@ -17,14 +17,14 @@ export default function Etapa() {
   const etapa = etapas.find((e) => e.numero === etapaNum);
   const articleRef = useRef<HTMLElement | null>(null);
 
-  // Imagens injetadas via dangerouslySetInnerHTML às vezes ficavam em "ponto"
-  // antes de carregar (quando o browser inferia loading: lazy ou decoding: async).
-  // Forçar eager + sync evita o flash de placeholder.
+  // Imagens injetadas via dangerouslySetInnerHTML: forçar eager loading.
+  // decoding: 'auto' (não 'sync') — sync bloqueia a thread principal e
+  // estava deixando algumas imagens demorando muito para aparecer.
   useEffect(() => {
     const imgs = articleRef.current?.querySelectorAll('img') ?? [];
     imgs.forEach((img) => {
       img.loading = 'eager';
-      img.decoding = 'sync';
+      img.decoding = 'auto';
     });
   }, [paginaNum, etapaNum]);
 

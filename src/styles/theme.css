@@ -283,36 +283,30 @@ h1, h2, h3, h4, h5 {
 }
 
 /* ── Categorização de imagens no conteúdo legacy ──────────────────────
-   Diferenciação por VALOR do atributo width:
-   - Pequenas (figuras musicais): width=16, 20, 30, 32, 40 — independente
-     de ter style="max-width" inline (algumas figuras da etapa 1 têm).
-   - Grandes (illustrations, screenshots): SEM atributo width OU width grande. */
+   Pequenas (figuras musicais 16-40px): pelo VALOR do atributo width.
+   max-width: none sobrescreve qualquer style="max-width: 100%" inline
+   que algumas têm (página 5 etapa 1). */
 .etapa-conteudo img[width="16"],
 .etapa-conteudo img[width="20"],
 .etapa-conteudo img[width="30"],
 .etapa-conteudo img[width="32"],
 .etapa-conteudo img[width="40"] {
-  display: inline-block !important;
+  display: inline-block;
   vertical-align: middle;
-  height: 2em !important;
-  width: auto !important;
-  max-width: none !important;
+  height: 2em;
+  width: auto;
+  max-width: none;
   margin: 0.15rem 0.25rem;
 }
-/* Imagens grandes: sem width attr OU com width grande, MAS não as pequenas
-   listadas acima. Limitadas a max-width no desktop para não ficarem gigantes
-   (ocupavam quase 1000px no container 1080px), centralizadas. */
-.etapa-conteudo img:not([width]),
-.etapa-conteudo img[style*="max-width"]:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="40"]) {
-  display: block;
+/* Imagens grandes do legacy: ALVO restrito a <img> filhas diretas de <td>
+   (estrutura do legacy) que NÃO sejam pequenas. Evita atingir imagens dos
+   componentes React (.figura-botao-img, .figura-card-img — não estão em td). */
+.etapa-conteudo td > img:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="40"]) {
   width: 100%;
-  max-width: 560px;
+  max-width: 100%;
   height: auto;
-  margin: 0.5rem auto;
-}
-.etapa-conteudo td:has(> img:not([width])),
-.etapa-conteudo td:has(> img[style*="max-width"]:not([width="16"]):not([width="20"]):not([width="30"]):not([width="32"]):not([width="40"])) {
-  padding: 0.25rem !important;
+  display: block;
+  margin: 0;
 }
 
 /* Imagens em células coloridas (legendas etapa 3, compassos coloridos):
@@ -380,22 +374,44 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-/* Compassos da etapa 3 (tabelas com tr.unidades-tempo): ocupam toda largura
-   mas SEM table-layout: fixed — assim os widths inline (25%, 12.5%) são
-   respeitados e a proporção tempo/figura fica visível pedagogicamente. */
+/* Compassos da etapa 3 — visual de "trilho" parecido com .compasso-pista
+   do componente MontaCompasso. Mantém estrutura de tabela (widths inline
+   25%/12.5% funcionam naturalmente, dando proporção pedagógica:
+   2 colcheias = 1 semínima visualmente). */
 .etapa-conteudo table:has(tr.unidades-tempo) {
   width: 100% !important;
+  border: none !important;
+  border-collapse: separate !important;
+  border-spacing: 4px !important;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 6px;
+  margin: 1rem auto;
+}
+.etapa-conteudo table:has(tr.unidades-tempo) thead th {
+  background: transparent !important;
+  border: none !important;
+  font-weight: 600;
+  padding-bottom: 0.3rem !important;
 }
 .etapa-conteudo tr.unidades-tempo td {
-  padding: 0.85rem 0.4rem !important;
+  border: none !important;
+  border-radius: 6px !important;
+  text-align: center;
   vertical-align: middle;
+  padding: 0.6rem 0.3rem !important;
+  min-height: 56px;
 }
 .etapa-conteudo tr.unidades-tempo td[style*="background-color"] img {
-  height: 2.6em !important;
+  height: 2.4em !important;
 }
 @media (max-width: 600px) {
+  .etapa-conteudo tr.unidades-tempo td {
+    padding: 0.5rem 0.15rem !important;
+    min-height: 44px;
+  }
   .etapa-conteudo tr.unidades-tempo td[style*="background-color"] img {
-    height: 2em !important;
+    height: 1.8em !important;
   }
 }
 
@@ -859,7 +875,10 @@ h1, h2, h3, h4, h5 {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  /* minmax em em (não px) — responde ao zoom de fonte: quando o usuário
+     aumenta a fonte, 11em cresce em px e o número de colunas que cabem
+     diminui automaticamente, virando 1 coluna em vez de espremer. */
+  grid-template-columns: repeat(auto-fit, minmax(11em, 1fr));
   gap: 0.5rem;
 }
 .legenda-figura-item {
@@ -894,12 +913,13 @@ h1, h2, h3, h4, h5 {
   font-weight: 600;
   color: var(--text-primary);
 }
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+  /* Em telas estreitas, força 1 coluna (sem isso ficavam 2 espremidas) */
   .legenda-figuras-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
   .legenda-figura-nome {
-    font-size: 0.82rem;
+    font-size: 0.92rem;
   }
 }
 
