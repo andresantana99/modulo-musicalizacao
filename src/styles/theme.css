@@ -582,7 +582,7 @@ h1, h2, h3, h4, h5 {
 
 /* Previne overflow horizontal de elementos legacy (iframes 1500px, tabelas largas) */
 .page-container {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Mobile: header principal (logo + título grande) */
