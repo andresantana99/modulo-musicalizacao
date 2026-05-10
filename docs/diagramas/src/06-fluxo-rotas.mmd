@@ -1,0 +1,19 @@
+stateDiagram-v2
+    [*] --> Home: "/"
+    Home --> SelecaoEtapa: "Começar"
+    SelecaoEtapa --> Etapa: "/etapa/:numero"
+    Etapa --> Etapa: "/etapa/:numero/pagina/:pagina"
+    Etapa --> Atividades: "última página → atividades"
+    Atividades --> SelecaoEtapa: "Próxima etapa"
+    Atividades --> Etapa: "Voltar ao conteúdo"
+    Home --> Metronomo: "/metronomo"
+    SelecaoEtapa --> Metronomo: "/metronomo"
+    Metronomo --> Home: voltar
+    Etapa --> SelecaoEtapa: "Sair da etapa"
+
+    state Etapa {
+        [*] --> ConteudoHTML
+        ConteudoHTML --> CompassoEstatico: pág. 3-1..3-7
+        ConteudoHTML --> MontaCompasso: pág. 3-8
+        ConteudoHTML --> MetronomoInline: pág. 3-9
+    }

@@ -1,0 +1,22 @@
+flowchart LR
+    U["Usuário<br/>(navegador)"]
+    GP["GitHub Pages<br/>(estático)"]
+    APP["SPA React<br/>(bundle Vite)"]
+    LS[("localStorage<br/>(progresso e preferências)")]
+    VL["VLibras<br/>(widget externo)"]
+
+    U -->|HTTPS| GP
+    GP -->|index.html + JS + CSS| APP
+    APP <-->|leitura/escrita| LS
+    APP -.->|carrega script| VL
+
+    subgraph "Pipeline (GitHub Actions)"
+        direction TB
+        REPO[Repositório GitHub] --> CI{CI: lint, typecheck, test, build}
+        CI -->|artefato dist/| DEPLOY[Deploy GitHub Pages]
+    end
+    DEPLOY --> GP
+
+    classDef futuro stroke-dasharray: 5 5,opacity:0.6;
+    SB[("Supabase<br/>(melhoria futura)")]:::futuro
+    APP -.-> SB

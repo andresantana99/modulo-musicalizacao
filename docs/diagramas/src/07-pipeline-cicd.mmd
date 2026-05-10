@@ -1,0 +1,17 @@
+flowchart TB
+    DEV[Desenvolvedor] -->|git push main| GH[Repositório GitHub]
+    GH -->|trigger workflow| T1
+
+    subgraph CI ["GitHub Actions — deploy.yml"]
+        T1["checkout @v4"] --> T2["setup-node @v4 (node 20)"]
+        T2 --> T3["npm ci"]
+        T3 --> T4["npm run lint"]
+        T4 --> T5["npm run typecheck"]
+        T5 --> T6["npm run test (Vitest)"]
+        T6 --> T7["npm run build (VITE_BASE)"]
+        T7 --> T8["upload-pages-artifact (dist/)"]
+        T8 --> T9["deploy-pages @v4"]
+    end
+
+    T9 --> PAGES["GitHub Pages<br/>/modulo-musicalizacao/"]
+    PAGES --> USER[Usuário final]

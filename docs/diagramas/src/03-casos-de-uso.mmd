@@ -1,0 +1,31 @@
+flowchart LR
+    Aluno((Aluno surdo))
+
+    UC1[UC-01<br/>Selecionar etapa]
+    UC2[UC-02<br/>Navegar páginas conceituais]
+    UC3[UC-03<br/>Realizar atividade]
+    UC4[UC-04<br/>Visualizar resultado]
+    UC5[UC-05<br/>Usar metrônomo visual]
+    UC6[UC-06<br/>Ajustar acessibilidade]
+    UC7[UC-07<br/>Construir compasso interativo]
+
+    Aluno --- UC1
+    Aluno --- UC2
+    Aluno --- UC3
+    Aluno --- UC4
+    Aluno --- UC5
+    Aluno --- UC6
+    Aluno --- UC7
+
+    UC3 -.include.-> UC4
+    UC2 -.extend.-> UC7
+
+    subgraph Sistema
+        UC1
+        UC2
+        UC3
+        UC4
+        UC5
+        UC6
+        UC7
+    end

@@ -1,0 +1,21 @@
+sequenceDiagram
+    actor Aluno
+    participant Browser
+    participant Router as HashRouter
+    participant Etapa as Etapa.tsx
+    participant Cfg as etapas.config.ts
+    participant Pag as paginas.ts
+    participant JSON as etapaN/paginas.json
+
+    Aluno->>Browser: Clica em "Próxima"
+    Browser->>Router: navega /etapa/2/pagina/5
+    Router->>Etapa: monta com {numero:2, pagina:5}
+    Etapa->>Cfg: etapas.find(numero=2)
+    Cfg-->>Etapa: { titulo, cor, totalPaginas }
+    Etapa->>Pag: getPagina(2, 5)
+    Pag->>JSON: lookup {pagina:5}
+    JSON-->>Pag: { html }
+    Pag->>Pag: resolverBase(html, BASE_URL)
+    Pag-->>Etapa: HTML resolvido
+    Etapa->>Browser: render via dangerouslySetInnerHTML
+    Etapa->>Browser: Layout reseta scroll para o topo

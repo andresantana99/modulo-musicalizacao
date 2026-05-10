@@ -1,0 +1,44 @@
+flowchart TB
+    App["App<br/>(HashRouter + Routes)"]
+    Layout["Layout<br/>(Header + Footer + Outlet)"]
+    Header["Header<br/>(navegação + acessibilidade + Modal)"]
+    Footer["Footer"]
+    BotoesA["BotoesAcessibilidade"]
+    Modal["Modal<br/>(confirmação genérica)"]
+
+    App --> Layout
+    Layout --> Header
+    Layout --> Footer
+    Header --> BotoesA
+    Header --> Modal
+
+    Home["Home"]
+    Selecao["SelecaoEtapa"]
+    Etapa["Etapa<br/>(carrega JSON ou componente)"]
+    Atividades["Atividades<br/>(quizzes da etapa)"]
+    Metronomo["Metronomo<br/>(rota standalone)"]
+    NotFound["NotFound"]
+
+    Layout --> Home
+    Layout --> Selecao
+    Layout --> Etapa
+    Layout --> Atividades
+    Layout --> Metronomo
+    Layout --> NotFound
+
+    Etapa --> CompassoEstatico["CompassoEstatico<br/>(Etapa 3 pág. 1–7)"]
+    Etapa --> MontaCompasso["MontaCompasso<br/>(Etapa 3 pág. 8)"]
+    Etapa --> MetronomoInline["MetronomoInline<br/>(Etapa 3 pág. 9)"]
+    Etapa --> Conteudo["Conteúdo HTML<br/>(via getPagina)"]
+
+    Atividades --> Quiz["QuizPergunta"]
+    Metronomo --> MetronomoVisual
+
+    CompassoEstatico --> Legenda["LegendaFiguras"]
+    MontaCompasso --> Legenda
+    MetronomoInline --> Legenda
+    MetronomoVisual --> Legenda
+
+    Quiz -. usa .-> StoreA[("useAtividadesStore<br/>(Zustand + persist)")]
+    BotoesA -. usa .-> Hook["useAcessibilidade"]
+    Hook -. usa .-> StoreUI[("useUIStore<br/>(Zustand + persist)")]

@@ -1,0 +1,18 @@
+sequenceDiagram
+    actor Aluno
+    participant AT as Atividades.tsx
+    participant QP as QuizPergunta.tsx
+    participant ST as useAtividadesStore<br/>(Zustand)
+    participant LS as localStorage
+
+    Aluno->>AT: Acessa /etapa/N/atividades
+    AT->>AT: getAtividades(N)
+    AT->>QP: Renderiza pergunta atual
+    QP->>Aluno: Mostra opções
+    Aluno->>QP: Seleciona opção
+    QP->>QP: Compara com correta
+    QP->>ST: registrar({atividadeId, opcaoEscolhida, acertou})
+    ST->>LS: persist em "atividades-respostas"
+    QP->>Aluno: Feedback visual + explicação
+    AT->>QP: Próxima pergunta ou tela final
+    AT->>Aluno: Relatório (estrelas, pontos, streak)
